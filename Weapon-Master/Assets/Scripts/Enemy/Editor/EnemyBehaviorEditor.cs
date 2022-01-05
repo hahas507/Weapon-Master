@@ -11,5 +11,9 @@ public class EnemyBehaviorEditor : Editor
         EnemyBehavior behavior = (EnemyBehavior)target;
         Handles.color = Color.red;
         Handles.DrawWireArc(behavior.transform.position, Vector3.up, Vector3.forward, 360, behavior.searchRange);
+        Handles.color = Color.yellow;
+        Handles.DrawWireArc(behavior.transform.position, Vector3.up, Vector3.forward, 360, behavior.range);
+        Handles.color = Color.blue;
+        Handles.DrawWireArc(behavior.transform.position, Vector3.up, Vector3.forward, 360, behavior.battleRange);
     }
 }
