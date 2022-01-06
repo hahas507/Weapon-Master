@@ -96,7 +96,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private void RandomActions() //Chooses action randomly during battle.
     {
-        int decision = Random.Range(0, System.Enum.GetValues(typeof(ACTIONS)).Length); //FOLLOW is not included.
+        int decision = Random.Range(0, System.Enum.GetValues(typeof(ACTIONS)).Length - 1); //FOLLOW is not included.
         actions = (ACTIONS)decision;
 
         switch (actions)
