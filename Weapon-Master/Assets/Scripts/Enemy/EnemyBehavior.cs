@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    private const float minPathUpdateTime = .2f;
+    private const float pathUpdateMoveThreshold = .5f;
+    private float speed = 3;
+
     [Range(0, 100)]
-    [SerializeField] public float searchRange;[System.NonSerialized] public float range;
+    [SerializeField] public float searchRange;[System.NonSerialized] public float range;//need to change to private. It's  public because of EnemybehaviorEditor.cs
 
     [Range(0, 100)]
     [SerializeField] public float battleRange;
 
     [SerializeField] private LayerMask targetMask;
 
-    private bool alreadyInBattle = false;
+    private bool alreadyFoundPlayer = false;
+    private bool alreadyBattleStarted = false;
 
-    private Rigidbody enemyRig;
     private GameObject player;
+    private Vector3[] path;
+    private int targetIndex;
 
     private void Start()
     {
-        enemyRig = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -28,7 +33,7 @@ public class EnemyBehavior : MonoBehaviour
         Search();
     }
 
-    private void Search() //only used for detecting player.
+    private void Search()
     {
         Collider[] _target = Physics.OverlapSphere(transform.position, range, targetMask);
 
@@ -38,29 +43,75 @@ public class EnemyBehavior : MonoBehaviour
 
             if (targetTransform.tag == "Player")
             {
-                if (!alreadyInBattle)
+                if (!alreadyFoundPlayer)
                 {
-                    Debug.Log("Found player.");
                     range *= 2;
-
-                    FollowPlayer();
+                    StartCoroutine(UpdatePath());
                 }
-                alreadyInBattle = true;
+                alreadyFoundPlayer = true;
                 BattleStart();
             }
         }
         if (_target.Length == 0)
         {
-            alreadyInBattle = false;
+            alreadyFoundPlayer = false;
             range = searchRange;
-            Debug.Log("Player not found.");
         }
     }
 
-    private void FollowPlayer()
+    private IEnumerator UpdatePath()
     {
-        //Path find using raycast. LayerMask must include Obsticle and Player layer.
-        //Stop after entering battle range.
+        if (Time.timeSinceLevelLoad < .3f)
+        {
+            yield return new WaitForSeconds(.3f);
+        }
+        PathRequestManager.RequestPath(transform.position, player.transform.position, OnPathFound);
+
+        float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
+        Vector3 targetPosOld = player.transform.position;
+
+        yield return 0;
+        //Debug.Log("alreadyFoundPlayer: " + alreadyFoundPlayer);
+        while (alreadyFoundPlayer)
+        {
+            yield return new WaitForSeconds(minPathUpdateTime);
+            if ((player.transform.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+            {
+                PathRequestManager.RequestPath(transform.position, player.transform.position, OnPathFound);
+                targetPosOld = player.transform.position;
+            }
+        }
+    }
+
+    public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
+    {
+        if (pathSuccessful)
+        {
+            path = newPath;
+            targetIndex = 0;
+            StopCoroutine("FollowPath");
+            StartCoroutine("FollowPath");
+        }
+    }
+
+    private IEnumerator FollowPath()
+    {
+        Vector3 currentWaypoint = path[0];
+        while (alreadyFoundPlayer && !alreadyBattleStarted)
+        {
+            if (transform.position == currentWaypoint)
+            {
+                targetIndex++;
+                if (targetIndex >= path.Length)
+                {
+                    yield break;
+                }
+                currentWaypoint = path[targetIndex];
+            }
+
+            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+            yield return null;
+        }
     }
 
     private void BattleStart()
@@ -75,9 +126,13 @@ public class EnemyBehavior : MonoBehaviour
 
             if (targetTransform.tag == "Player")
             {
-                Debug.Log("battle start.");
                 RandomActions();
+                alreadyBattleStarted = true;
             }
+        }
+        if (_target.Length == 0)
+        {
+            alreadyBattleStarted = false;
         }
     }
 
@@ -129,5 +184,26 @@ public class EnemyBehavior : MonoBehaviour
 
     private void Retreat()
     {
+    }
+
+    public void OnDrawGizmos()
+    {
+        if (path != null)
+        {
+            for (int i = targetIndex; i < path.Length; i++)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(path[i], Vector3.one);
+
+                if (i == targetIndex)
+                {
+                    Gizmos.DrawLine(transform.position, path[i]);
+                }
+                else
+                {
+                    Gizmos.DrawLine(path[i - 1], path[i]);
+                }
+            }
+        }
     }
 }
