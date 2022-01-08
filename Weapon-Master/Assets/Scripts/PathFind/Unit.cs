@@ -40,6 +40,7 @@ public class Unit : MonoBehaviour
             }
 
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+            Debug.Log(speed);
             yield return null;
         }
     }

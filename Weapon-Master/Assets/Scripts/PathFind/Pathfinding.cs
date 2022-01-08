@@ -7,6 +7,7 @@ public class Pathfinding : MonoBehaviour
 {
     private PathRequestManager requestManager;
     private Grid grid;
+    [SerializeField] private GameObject wpPrefab;
 
     private void Awake()
     {
@@ -68,6 +69,11 @@ public class Pathfinding : MonoBehaviour
         if (pathSuccess)
         {
             waypoints = RetracePath(startNode, targetNode);
+            //for (int i = 0; i < waypoints.Length; i++)
+            //{
+            //    Debug.Log("waypoint[" + i + "]" + waypoints[i]);
+            //    Instantiate(wpPrefab, waypoints[i], transform.rotation);
+            //}
         }
         requestManager.FinishedProcessingPath(waypoints, pathSuccess);
     }

@@ -6,7 +6,7 @@ public class EnemyBehavior : MonoBehaviour
 {
     private const float minPathUpdateTime = .2f;
     private const float pathUpdateMoveThreshold = .5f;
-    private float speed = 3;
+    [SerializeField] private float speed = 3;
 
     [Range(0, 100)]
     [SerializeField] public float searchRange;[System.NonSerialized] public float range;//need to change to private. It's  public because of EnemybehaviorEditor.cs
@@ -22,6 +22,9 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     private Vector3[] path;
     private int targetIndex;
+
+    private RaycastHit raycastHit;
+    private Vector3 targetDir;
 
     private void Start()
     {
@@ -41,16 +44,26 @@ public class EnemyBehavior : MonoBehaviour
         {
             Transform targetTransform = _target[i].transform;
 
-            if (targetTransform.tag == "Player")
+            //if (targetTransform.tag == "Player")
+            //{
+            targetDir = (targetTransform.position - transform.position).normalized;
+
+            if (Physics.Raycast(transform.position, targetDir, out raycastHit, range, targetMask))
             {
-                if (!alreadyFoundPlayer)
+                if (raycastHit.transform.tag == "Player")
                 {
-                    range *= 2;
-                    StartCoroutine(UpdatePath());
+                    Debug.DrawRay(transform.position, targetDir, Color.red);
+                    Debug.Log("Looking at Player.");
                 }
-                alreadyFoundPlayer = true;
-                BattleStart();
             }
+            if (!alreadyFoundPlayer)
+            {
+                range *= 2;
+                StartCoroutine(UpdatePath());
+            }
+            alreadyFoundPlayer = true;
+            BattleStart();
+            //}
         }
         if (_target.Length == 0)
         {
