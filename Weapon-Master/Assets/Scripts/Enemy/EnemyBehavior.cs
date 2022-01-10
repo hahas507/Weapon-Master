@@ -14,7 +14,8 @@ public class EnemyBehavior : MonoBehaviour
     [Range(0, 100)]
     [SerializeField] public float battleRange;
 
-    [SerializeField] private LayerMask targetMask;
+    [SerializeField] private LayerMask SearchMask;
+    [SerializeField] private LayerMask planeMask;
 
     private bool alreadyFoundPlayer = false;
     private bool alreadyBattleStarted = false;
@@ -25,10 +26,12 @@ public class EnemyBehavior : MonoBehaviour
 
     private RaycastHit raycastHit;
     private Vector3 targetDir;
+    private Grid grid;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        StartCoroutine(GridUpdate());
     }
 
     private void Update()
@@ -36,34 +39,49 @@ public class EnemyBehavior : MonoBehaviour
         Search();
     }
 
+    private IEnumerator GridUpdate()
+    {
+        if (Physics.Raycast(transform.position, Vector3.up * -1, out raycastHit, 10, planeMask))
+        {
+            Debug.DrawRay(transform.position + Vector3.up, Vector3.down, Color.red);
+            if (raycastHit.transform.tag == "Plane")
+            {
+                Debug.Log("Plane found.");
+                grid = raycastHit.transform.GetComponent<Grid>();
+                grid.CreateGrid();
+            }
+        }
+        yield return new WaitForSeconds(1f);
+    }
+
     private void Search()
     {
-        Collider[] _target = Physics.OverlapSphere(transform.position, range, targetMask);
+        Collider[] _target = Physics.OverlapSphere(transform.position, range, SearchMask);
 
         for (int i = 0; i < _target.Length; i++)
         {
             Transform targetTransform = _target[i].transform;
 
-            //if (targetTransform.tag == "Player")
-            //{
-            targetDir = (targetTransform.position - transform.position).normalized;
+            if (targetTransform.tag == "Player")
+            {
+                //targetDir = (targetTransform.position - transform.position).normalized;
 
-            if (Physics.Raycast(transform.position, targetDir, out raycastHit, range, targetMask))
-            {
-                if (raycastHit.transform.tag == "Player")
+                //if (Physics.Raycast(transform.position, targetDir, out raycastHit, range, targetMask))
+                //{
+                //    if (raycastHit.transform.tag == "Player")
+                //    {
+                //        Debug.DrawRay(transform.position, targetDir, Color.red);
+                //        Debug.Log("Looking at Player.");
+                //    }
+                //}
+                if (!alreadyFoundPlayer)
                 {
-                    Debug.DrawRay(transform.position, targetDir, Color.red);
-                    Debug.Log("Looking at Player.");
+                    range *= 2;
+                    StartCoroutine(UpdatePath());
                 }
+                alreadyFoundPlayer = true;
+                BattleStart();
             }
-            if (!alreadyFoundPlayer)
-            {
-                range *= 2;
-                StartCoroutine(UpdatePath());
-            }
-            alreadyFoundPlayer = true;
-            BattleStart();
-            //}
         }
         if (_target.Length == 0)
         {
@@ -131,7 +149,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         //need another Physics.OverlapSphere with half the size of Search()'s. Which will be used during battle.
 
-        Collider[] _target = Physics.OverlapSphere(transform.position, battleRange, targetMask);
+        Collider[] _target = Physics.OverlapSphere(transform.position, battleRange, SearchMask);
 
         for (int i = 0; i < _target.Length; i++)
         {
