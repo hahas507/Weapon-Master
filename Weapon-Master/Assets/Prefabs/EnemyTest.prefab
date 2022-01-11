@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1195857386463045273}
   - component: {fileID: 1195857386463045272}
   - component: {fileID: 1195857386463045271}
-  - component: {fileID: 1546056214366676363}
+  - component: {fileID: 7843049433858207791}
+  - component: {fileID: 8914534648290282081}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +99,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1546056214366676363
+--- !u!54 &7843049433858207791
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195857386463045270}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
+--- !u!114 &8914534648290282081
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,16 +124,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1195857386463045270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fe48c3a34c472c4a96ec6ddacf8e543, type: 3}
+  m_Script: {fileID: 11500000, guid: bb96e9952c0882741bd76e26ac0c5fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  searchRange: 10
-  battleRange: 3
+  speed: 3
+  searchRange: 0
+  battleRange: 0
   SearchMask:
-    serializedVersion: 2
-    m_Bits: 8
-  planeMask:
     serializedVersion: 2
     m_Bits: 0
   actions: 0

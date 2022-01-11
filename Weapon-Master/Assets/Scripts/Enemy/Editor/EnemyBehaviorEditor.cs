@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(EnemyBehavior))]
+[CustomEditor(typeof(EnemyBehavior)), CanEditMultipleObjects]
 public class EnemyBehaviorEditor : Editor
 {
     private void OnSceneGUI() //Shows the range(FOV) in the scene view.
