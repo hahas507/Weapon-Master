@@ -6,29 +6,29 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
 
-    Rigidbody rb;
-    CapsuleCollider capsuleCollider;
+    private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
 
-    void Awake() {
+    private void Awake()
+    {
         rb = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
-    
-    void Start()
+
+    private void Start()
     {
-        
     }
 
-    void Update()
+    private void Update()
     {
-        
     }
 
-    void FixedUpdate() {
+    private void FixedUpdate()
+    {
         Move();
     }
 
-    void Move()
+    private void Move()
     {
         float moveDirX = Input.GetAxisRaw("Horizontal");
         float moveDirZ = Input.GetAxisRaw("Vertical");
@@ -39,5 +39,9 @@ public class PlayerController : MonoBehaviour
         Vector3 velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
 
         rb.MovePosition(transform.position + velocity * Time.deltaTime);
+        if (moveDirX == 0 && moveDirZ == 0)
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
 }
