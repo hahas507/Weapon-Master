@@ -39,9 +39,5 @@ public class PlayerController : MonoBehaviour
         Vector3 velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
 
         rb.MovePosition(transform.position + velocity * Time.deltaTime);
-        if (moveDirX == 0 && moveDirZ == 0)
-        {
-            rb.velocity = Vector3.zero;
-        }
     }
 }
