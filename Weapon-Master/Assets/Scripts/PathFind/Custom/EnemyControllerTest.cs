@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class EnemyControllerTest : MonoBehaviour
 {
@@ -23,27 +22,56 @@ public class EnemyControllerTest : MonoBehaviour
     private RaycastHit raycastHit;
     private Vector3 targetDir;
     private Vector3 lookAngle;
-    private Transform targetTransform;
 
     private Rigidbody rig;
 
     private void Start()
     {
         rig = GetComponent<Rigidbody>();
-        range = searchRange;
     }
 
     private void Update()
     {
         Test();
+        //Search();
+    }
+
+    private void Search()
+    {
+        Collider[] _target = Physics.OverlapSphere(transform.position, range, searchMask);
+
+        for (int i = 0; i < _target.Length; i++)
+        {
+            Transform targetTransform = _target[i].transform;
+            targetDir = (targetTransform.position - transform.position).normalized;
+
+            if (Physics.Raycast(transform.position, targetDir, out raycastHit, range, searchMask))
+            {
+                if (!alreadyFoundPlayer)
+                {
+                    range *= 2;
+                }
+                alreadyFoundPlayer = true;
+                Follow();
+                BattleStart();
+            }
+        }
+        if (_target.Length == 0)
+        {
+            alreadyFoundPlayer = false;
+            range = searchRange;
+            rig.velocity = Vector3.zero;
+        }
     }
 
     private void Test()
     {
+        range = searchRange;
+
         Collider[] _target = Physics.OverlapSphere(transform.position, range, searchMask);
         for (int i = 0; i < _target.Length; i++)
         {
-            targetTransform = _target[i].transform;
+            Transform targetTransform = _target[i].transform;
 
             if (targetTransform.tag == "Player")
             {
@@ -52,27 +80,16 @@ public class EnemyControllerTest : MonoBehaviour
                 {
                     alreadyFoundPlayer = false;
                     range = searchRange;
+                    rig.velocity = Vector3.zero;
+                    Debug.Log("Obsticle is in between.");
                     return;
                 }
-
-                if (!alreadyFoundPlayer)
-                {
-                    range = searchRange * 2;
-                }
                 alreadyFoundPlayer = true;
-
+                range *= 2;
                 Follow();
                 BattleStart();
+                Debug.Log("Player Found");
             }
-            else
-            {
-                alreadyFoundPlayer = false;
-            }
-        }
-        if (!alreadyFoundPlayer)
-        {
-            range = searchRange;
-            rig.velocity = Vector3.zero;
         }
     }
 
@@ -80,7 +97,7 @@ public class EnemyControllerTest : MonoBehaviour
     {
         if (alreadyFoundPlayer && !alreadyBattleStarted)
         {
-            lookAngle = Vector3.up * GetDegree(transform.position, targetTransform.position);
+            lookAngle = Vector3.up * GetDegree(transform.position, raycastHit.transform.position);
             transform.eulerAngles = lookAngle; //need to change to coroutine since it face toward the target at instant.
 
             rig.AddForce(targetDir * speed, ForceMode.VelocityChange);
