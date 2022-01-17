@@ -6,16 +6,18 @@ public delegate void FunctionPointer(int param);
 
 public class Spawn
 {
-    FunctionPointer functions;
+    int idx;
+    FunctionPointer spawnPattern;
 
-    public Spawn(FunctionPointer pat)
+    public Spawn(int mIdx, FunctionPointer pat)
     {
-        this.functions = pat;
+        this.idx = mIdx;
+        this.spawnPattern = pat;
     }
 
-    public void SpawnPattern(int idx) //idx : spawn area index
+    public void SpawnPattern()
     {
-        functions(idx);
+        spawnPattern(idx);
     }
 }
 
@@ -37,7 +39,7 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < cnt; i++) areas.Add(spawnArea.transform.GetChild(i).gameObject);
     }
 
-    void DestroyAllEnemy()
+    void DestroyEnemy()
     {
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < objects.Length; i++) Destroy(objects[i]);
@@ -45,7 +47,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnEnemyCircle(int idx)
     {
-        DestroyAllEnemy();
+        DestroyEnemy();
         Vector3 originPos = areas[idx].transform.position;
 
         for (int i = 0; i < 360; i += 36)
@@ -58,7 +60,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnEnemyX(int idx)
     {
-        DestroyAllEnemy();
+        DestroyEnemy();
         Vector3 originPos = areas[idx].transform.position;
 
         for (int i = 0, j = 0; i < 5; i++, j++)
@@ -75,13 +77,12 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnEnemySquare(int idx)
     {
-        DestroyAllEnemy();
+        DestroyEnemy();
         Vector3 originPos = areas[idx].transform.position;
 
         int cnt = 0, col = 0, z = 5;
         while (cnt < 9)
         {
-            //
             if (z == 5 && col > 2)
             {
                 z = 0;
@@ -92,12 +93,10 @@ public class SpawnManager : MonoBehaviour
                 z = -5;
                 col = 0;
             }
-            // line(row) progress
-
             int x = -5 + 5 * col;
+
             Vector3 pos = new Vector3(x, 0, z);
             Vector3 spawnPos = originPos + pos;
-            
             Instantiate(enemy, spawnPos, Quaternion.identity);
 
             ++col;
@@ -111,7 +110,7 @@ public class SpawnManager : MonoBehaviour
         int areaIdx = Random.Range(0, areas.Count);
         int patIdx = Random.Range(0, pattern.Length);
 
-        Spawn spawn = new Spawn(pattern[patIdx]);
-        spawn.SpawnPattern(areaIdx);
+        Spawn spawn = new Spawn(areaIdx, pattern[patIdx]);
+        spawn.SpawnPattern();
     }
 }
