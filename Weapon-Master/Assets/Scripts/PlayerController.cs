@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
+    public int maxHP;
 
     float moveDirX;
     float moveDirZ;
 
-    SpawnManager spm;
+    int currHP;
+
+    SpawnManager spawnMgr;
     Rigidbody rb;
     CapsuleCollider capsuleCollider;
 
@@ -18,12 +20,12 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-        spm = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
+        spawnMgr = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
     }
 
     void Start()
     {
-
+        currHP = maxHP;
     }
 
     void Update()
@@ -53,7 +55,14 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("SpawnTrigger"))
         {
 
-            spm.SpawnEnemy();
+            spawnMgr.SpawnEnemy();
+        }
+    }
+
+    void OnCollisionEnter(Collision other) {
+        if(other.gameObject.CompareTag("Enemy")){
+            other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
         }
     }
 }
