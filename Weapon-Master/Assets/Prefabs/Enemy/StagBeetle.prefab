@@ -63,7 +63,7 @@ Transform:
   - {fileID: 3184479999681732022}
   m_Father: {fileID: 6355106496946261852}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 104.03601, y: 0, z: 0}
 --- !u!1 &1712159696540719176
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +309,7 @@ Transform:
   - {fileID: 336457030546616528}
   m_Father: {fileID: 6355106496946261852}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 104.03601, y: 0, z: 0}
 --- !u!1 &4781233681787649120
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +403,7 @@ Transform:
   - {fileID: 2268653043910269831}
   m_Father: {fileID: 9172885944822243112}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -14.036, y: 0, z: 0}
 --- !u!1 &7339118611524391701
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,8 +531,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.5
-  searchRange: 10
-  battleRange: 5
+  searchRange: 17
+  battleRange: 10
   playerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -540,9 +540,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   actions: 0
-  attackForce: 3
-  attackCount: 3
-  attackDelay: 2
+  attackForce: 11.7
+  attackCount: 4
+  attackDelay: 1.5
 --- !u!1 &8695029436343319340
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,15 +25,18 @@ public abstract class EnemyControllerTest : MonoBehaviour
     protected Vector3 lookAngle;
     protected Vector3 targetPosition;
     private GameObject player;
+    protected float clipTime;
 
     private List<Transform> detectedTargets;
 
     protected Rigidbody rig;
+    protected Animator anim;
 
-    private void Start()
+    protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         rig = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
         range = searchRange;
     }
 
@@ -95,6 +98,7 @@ public abstract class EnemyControllerTest : MonoBehaviour
             transform.eulerAngles = lookAngle; //need to change to coroutine since it face toward the target at instant.
             if (!alreadyBattleStarted)
             {
+                anim.SetBool("isWalking", true);
                 rig.AddForce(targetDir * speed, ForceMode.VelocityChange);
                 if (rig.velocity.magnitude > speed)
                 {
@@ -171,4 +175,17 @@ public abstract class EnemyControllerTest : MonoBehaviour
     }
 
     protected abstract void JakoAttack();
+
+    //protected float GetClipLength(AnimationClip[] _clips, string clipName)
+    //{
+    //    AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+    //    for (int i = 0; i < clips.Length; i++)
+    //    {
+    //        if ()
+    //        {
+    //        }
+    //    }
+
+    //    return clipTime;
+    //}
 }
