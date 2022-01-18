@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stagbeetle : EnemyControllerTest
 {
-    [Range(0, 20)]
+    [Range(0, 30)]
     [SerializeField] private float attackForce;
 
     [Range(0, 5)]
@@ -15,7 +15,7 @@ public class Stagbeetle : EnemyControllerTest
     [Range(0, 3)]
     [SerializeField] private float attackDelay;
 
-    private float afterAttackDelay;
+    private Vector3 launchDir;
 
     protected override void Start()
     {
@@ -62,11 +62,13 @@ public class Stagbeetle : EnemyControllerTest
 
             anim.SetBool("prepareAttack", false);
             anim.SetTrigger("rightBefore");
+            transform.eulerAngles = lookAngle;
+            launchDir = targetDir;
             yield return new WaitForSeconds(0.5f);
             anim.Play("Attack");
             rig.velocity = Vector3.zero;
-            transform.eulerAngles = lookAngle;
-            rig.AddForce(targetDir * attackForce, ForceMode.VelocityChange);
+
+            rig.AddForce(launchDir * attackForce, ForceMode.VelocityChange);
             counter--;
             yield return new WaitForSeconds(attackDelay / 2);
         }

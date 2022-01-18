@@ -11,9 +11,9 @@ public class EnemyControllerTestEditor : Editor
         EnemyControllerTest behavior = (EnemyControllerTest)target;
         Handles.color = Color.red;
         Handles.DrawWireArc(behavior.transform.position, Vector3.up, Vector3.forward, 360, behavior.searchRange);
-        Handles.color = Color.cyan;
+        Handles.color = Color.red;
         Handles.DrawWireArc(behavior.transform.position, Vector3.up, Vector3.forward, 360, behavior.range);
-        Handles.color = Color.black;
+        Handles.color = Color.blue;
         Handles.DrawWireArc(behavior.transform.position, Vector3.up, Vector3.forward, 360, behavior.battleRange);
     }
 }
