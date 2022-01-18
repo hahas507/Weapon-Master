@@ -7,6 +7,7 @@ public class TIgerbeetle : EnemyControllerTest
     private float t;
     [SerializeField] [Range(0, 5)] private float jumpSpeed;
     [SerializeField] [Range(0, 20)] private float jumpHeight;
+    [SerializeField] [Range(0, 5)] private int jumpPrepareTime;
     [SerializeField] private GameObject point;
 
     protected override void Update()
@@ -18,12 +19,15 @@ public class TIgerbeetle : EnemyControllerTest
             BattleStart();
 
             Follow();
-            alreadyBattleStarted = false;
         }
+        BoolDebug();
     }
 
-    private void FixedUpdate()
+    private void BoolDebug()
     {
+        Debug.Log("alreadyFoundPlayer: " + alreadyFoundPlayer);
+        Debug.Log("alreadyBattleStarted: " + alreadyBattleStarted);
+        Debug.Log("alreadyInAction: " + alreadyInAction);
     }
 
     protected override void JakoAttack()
@@ -38,19 +42,29 @@ public class TIgerbeetle : EnemyControllerTest
 
     private IEnumerator JumpTo()
     {
+        anim.SetTrigger("JumpPose");
+        yield return new WaitForSeconds(ClipDuration("JumpPose"));
+        anim.SetTrigger("JumpPrepare");
+        yield return new WaitForSeconds(jumpPrepareTime);
+        anim.SetTrigger("RightBeforeJump");
+        yield return new WaitForSeconds(0.5f);
+        anim.SetTrigger("Jump");
+        Vector3 startPoint = transform.position;
         Vector3 landPoint = targetPosition;
-        Vector3 passPoint = (((targetPosition - transform.position) * .25f) + Vector3.up * jumpHeight) + transform.position;
+        Vector3 passPoint = (((targetPosition - startPoint) * .25f) + Vector3.up * jumpHeight) + startPoint;
+
         Instantiate(point, passPoint, Quaternion.identity);
         while (t <= 1)
         {
             t += Time.deltaTime * jumpSpeed;
             transform.position = new Vector3(
-           ThreePointBezier(transform.position.x, passPoint.x, landPoint.x),
-           ThreePointBezier(transform.position.y, passPoint.y, landPoint.y),
-           ThreePointBezier(transform.position.z, passPoint.z, landPoint.z));
+           ThreePointBezier(startPoint.x, passPoint.x, landPoint.x),
+           ThreePointBezier(startPoint.y, passPoint.y, landPoint.y),
+           ThreePointBezier(startPoint.z, passPoint.z, landPoint.z));
 
             yield return null;
         }
+        if (t >= 1) t = 0;
         alreadyInAction = false;
     }
 }
