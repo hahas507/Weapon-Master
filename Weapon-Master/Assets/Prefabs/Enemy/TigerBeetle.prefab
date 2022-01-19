@@ -668,7 +668,7 @@ GameObject:
   - component: {fileID: 1675358223407041006}
   - component: {fileID: -6201581355909914388}
   - component: {fileID: -7892572764639058531}
-  - component: {fileID: -6996898371753864667}
+  - component: {fileID: 6316209529336139181}
   - component: {fileID: -8557615495561626412}
   m_Layer: 0
   m_Name: Tigerbeetle
@@ -725,7 +725,7 @@ CapsuleCollider:
   m_Height: 4.4738436
   m_Direction: 2
   m_Center: {x: 0, y: 1.31, z: 0.49660915}
---- !u!54 &-6996898371753864667
+--- !u!54 &6316209529336139181
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -739,7 +739,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &-8557615495561626412
 MonoBehaviour:
@@ -762,6 +762,10 @@ MonoBehaviour:
   obsticleMask:
     serializedVersion: 2
     m_Bits: 256
+  jumpSpeed: 0
+  jumpHeight: 0
+  jumpPrepareTime: 0
+  attackDelay: 0
 --- !u!1 &8377472861766130282
 GameObject:
   m_ObjectHideFlags: 0
