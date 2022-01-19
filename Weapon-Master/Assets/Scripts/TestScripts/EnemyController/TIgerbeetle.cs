@@ -9,6 +9,7 @@ public class TIgerbeetle : EnemyControllerTest
     [SerializeField] [Range(0, 20)] private float jumpHeight;
     [SerializeField] [Range(0, 5)] private int jumpPrepareTime;
     [SerializeField] [Range(0, 3)] private float attackDelay;
+    [SerializeField] [Range(0, 10)] private int randomJumpRange;
     private bool isJumping = false;
 
     protected override void Update()
@@ -43,6 +44,7 @@ public class TIgerbeetle : EnemyControllerTest
             else if (isJumping)
             {
                 transform.eulerAngles = lookAngle;
+                rig.velocity = Vector3.zero;
             }
         }
     }
@@ -68,8 +70,8 @@ public class TIgerbeetle : EnemyControllerTest
         yield return new WaitForSeconds(0.5f);
         anim.SetTrigger("Jump");
         Vector3 startPoint = transform.position;
-        Vector3 landPoint = targetPosition;
-        Vector3 passPoint = (((targetPosition - startPoint) * .25f) + Vector3.up * jumpHeight) + startPoint;
+        Vector3 landPoint = (new Vector3(Random.onUnitSphere.x, 0, Random.onUnitSphere.z) * randomJumpRange) + targetPosition;
+        Vector3 passPoint = (((landPoint - startPoint) * .25f) + Vector3.up * jumpHeight) + startPoint;
 
         while (t <= 1)
         {
@@ -88,6 +90,7 @@ public class TIgerbeetle : EnemyControllerTest
                 anim.SetBool("Landing", false);
                 anim.SetTrigger("LandingAttack");
                 yield return new WaitForSeconds(attackDelay);
+                rig.velocity = Vector3.zero;
                 anim.SetTrigger("AfterAttack");
                 yield return new WaitForSeconds(ClipDuration("AfterAttack"));
                 isJumping = false;

@@ -719,7 +719,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7821328311485708178}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.2915053
   m_Height: 4.4738436
@@ -753,19 +753,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f59bcc61a3d3c24ab22eb4bdc09a40a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  searchRange: 0
-  battleRange: 0
+  speed: 2
+  searchRange: 20.1
+  battleRange: 15.4
   playerMask:
     serializedVersion: 2
     m_Bits: 8
   obsticleMask:
     serializedVersion: 2
     m_Bits: 256
-  jumpSpeed: 0
-  jumpHeight: 0
-  jumpPrepareTime: 0
-  attackDelay: 0
+  jumpSpeed: 2
+  jumpHeight: 9.7
+  jumpPrepareTime: 2
+  attackDelay: 1
+  randomJumpRange: 7
 --- !u!1 &8377472861766130282
 GameObject:
   m_ObjectHideFlags: 0
