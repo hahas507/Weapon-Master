@@ -21,6 +21,7 @@ public class TIgerbeetle : EnemyControllerTest
         //    BattleStart();
         //    Follow();
         //}
+        BoolDebug();
     }
 
     private void BoolDebug()
@@ -85,7 +86,13 @@ public class TIgerbeetle : EnemyControllerTest
                 anim.SetBool("Jump", false);
                 anim.SetBool("Landing", true);
             }
-            else if (t >= 1)
+            transform.eulerAngles = Vector3.up * (GetDegree(startPoint, landPoint));
+            transform.position = new Vector3(
+           ThreePointBezier(startPoint.x, passPoint.x, landPoint.x),
+           ThreePointBezier(startPoint.y, passPoint.y, landPoint.y),
+           ThreePointBezier(startPoint.z, passPoint.z, landPoint.z));
+
+            if (t >= 1)
             {
                 anim.SetBool("Landing", false);
                 anim.SetTrigger("LandingAttack");
@@ -95,10 +102,6 @@ public class TIgerbeetle : EnemyControllerTest
                 yield return new WaitForSeconds(ClipDuration("AfterAttack"));
                 isJumping = false;
             }
-            transform.position = new Vector3(
-           ThreePointBezier(startPoint.x, passPoint.x, landPoint.x),
-           ThreePointBezier(startPoint.y, passPoint.y, landPoint.y),
-           ThreePointBezier(startPoint.z, passPoint.z, landPoint.z));
 
             yield return null;
         }

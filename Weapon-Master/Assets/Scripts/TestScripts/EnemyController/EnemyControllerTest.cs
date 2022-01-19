@@ -101,7 +101,7 @@ public abstract class EnemyControllerTest : MonoBehaviour
         else return;
     }
 
-    private float GetDegree(Vector3 _from, Vector3 _to)
+    protected float GetDegree(Vector3 _from, Vector3 _to)
     {
         return Mathf.Atan2(_from.x - _to.x, _from.z - _to.z) * Mathf.Rad2Deg;
     }

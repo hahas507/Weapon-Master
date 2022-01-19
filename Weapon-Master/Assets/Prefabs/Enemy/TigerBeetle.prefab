@@ -754,7 +754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  searchRange: 20.1
+  searchRange: 20.4
   battleRange: 15.4
   playerMask:
     serializedVersion: 2

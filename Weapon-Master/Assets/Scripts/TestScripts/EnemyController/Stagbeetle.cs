@@ -57,6 +57,7 @@ public class Stagbeetle : EnemyControllerTest
         counter = attackCount;
         while (counter > 0)
         {
+            rig.velocity = Vector3.zero;
             anim.SetBool("prepareAttack", true);
             yield return new WaitForSeconds(attackDelay);
 
