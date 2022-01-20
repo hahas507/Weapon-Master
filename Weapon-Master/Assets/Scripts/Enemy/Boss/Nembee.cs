@@ -9,6 +9,9 @@ public class Nembee : MonoBehaviour
     private RaycastHit raycastHit;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject fruit;
+    [SerializeField] private GameObject[] Jakos;
+    [SerializeField] [Range(1, 10)] private int spawnHowMany;
+    [SerializeField] [Range(1, 15)] private int spawnRange;
     [SerializeField] [Range(1, 5)] private int fruitTimer;
     private Tree tree;
     private Vector3 playerPos;
@@ -26,7 +29,7 @@ public class Nembee : MonoBehaviour
     {
         tree = FindObjectOfType<Tree>();
         rig = GetComponent<Rigidbody>();
-        StartCoroutine(ThrowFruit());
+        StartCoroutine(CallJakos());
     }
 
     private void Update()
@@ -138,6 +141,18 @@ public class Nembee : MonoBehaviour
                 timer = 0;
             }
             yield return null;
+        }
+    }
+
+    private IEnumerator CallJakos()
+    {
+        //after animation
+        while (spawnHowMany > 0)
+        {
+            int spawn = Random.Range(0, Jakos.Length);
+            GameObject clone = Instantiate(Jakos[spawn], transform.position + new Vector3(Random.onUnitSphere.x, 0, Random.onUnitSphere.z) * spawnRange, Quaternion.identity);
+            spawnHowMany--;
+            yield return new WaitForSeconds(.7f);
         }
     }
 
