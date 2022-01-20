@@ -8,6 +8,9 @@ public class Nembee : MonoBehaviour
     [SerializeField] [Range(0, 20)] private float speed;
     private RaycastHit raycastHit;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject fruit;
+    [SerializeField] [Range(1, 5)] private int fruitTimer;
+    private Tree tree;
     private Vector3 playerPos;
     private Vector3 playerDir;
     private Vector3 lookAngle;
@@ -21,7 +24,9 @@ public class Nembee : MonoBehaviour
 
     private void Start()
     {
+        tree = FindObjectOfType<Tree>();
         rig = GetComponent<Rigidbody>();
+        StartCoroutine(ThrowFruit());
     }
 
     private void Update()
@@ -36,6 +41,8 @@ public class Nembee : MonoBehaviour
     {
         STOP,
         FOLLOW,
+        HOPON,
+        THROW,
     }
 
     public CURRENTACTION CAction;
@@ -54,7 +61,6 @@ public class Nembee : MonoBehaviour
                 break;
 
             default:
-                Follow();
                 break;
         }
     }
@@ -110,7 +116,32 @@ public class Nembee : MonoBehaviour
         }
     }
 
-    protected float GetDegree(Vector3 _from, Vector3 _to)
+    private IEnumerator ThrowFruit()
+    {
+        float timer = 0;
+        while (!tree.ISTREEDOWN)
+        {
+            GetPlayerInfo();
+            transform.eulerAngles = lookAngle;
+            timer += Time.deltaTime;
+            if (timer >= fruitTimer)
+            {
+                GameObject clone = Instantiate(fruit, transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.4f);
+                clone = Instantiate(fruit, transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.4f);
+                clone = Instantiate(fruit, transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.4f);
+                clone = Instantiate(fruit, transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.4f);
+                clone = Instantiate(fruit, transform.position, Quaternion.identity);
+                timer = 0;
+            }
+            yield return null;
+        }
+    }
+
+    private float GetDegree(Vector3 _from, Vector3 _to)
     {
         return Mathf.Atan2(_from.x - _to.x, _from.z - _to.z) * Mathf.Rad2Deg;
     }
