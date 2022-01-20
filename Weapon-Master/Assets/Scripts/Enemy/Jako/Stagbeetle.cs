@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stagbeetle : EnemyControllerTest
+public class Stagbeetle : EnemyController
 {
     [Range(0, 30)]
     [SerializeField] private float attackForce;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class EnemyControllerTest : MonoBehaviour
+public abstract class EnemyController : MonoBehaviour
 {
     [SerializeField] private float speed;
 
@@ -178,18 +178,5 @@ public abstract class EnemyControllerTest : MonoBehaviour
     //            //Retreat();
     //            break;
     //    }
-    //}
-
-    //protected float GetClipLength(AnimationClip[] _clips, string clipName)
-    //{
-    //    AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
-    //    for (int i = 0; i < clips.Length; i++)
-    //    {
-    //        if ()
-    //        {
-    //        }
-    //    }
-
-    //    return clipTime;
     //}
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4120515392520057833}
   m_Layer: 8
   m_Name: Rock
-  m_TagString: Obsticle
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

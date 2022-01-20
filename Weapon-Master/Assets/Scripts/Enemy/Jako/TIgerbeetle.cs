@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TIgerbeetle : EnemyControllerTest
+public class TIgerbeetle : EnemyController
 {
     private float t;
     [SerializeField] [Range(0, 5)] private float jumpSpeed;
@@ -21,7 +21,6 @@ public class TIgerbeetle : EnemyControllerTest
         //    BattleStart();
         //    Follow();
         //}
-        BoolDebug();
     }
 
     private void BoolDebug()

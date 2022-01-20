@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 638174425725343899}
   m_Layer: 8
   m_Name: Tree
-  m_TagString: Obsticle
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
