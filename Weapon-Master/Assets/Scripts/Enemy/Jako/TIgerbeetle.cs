@@ -16,6 +16,7 @@ public class TIgerbeetle : EnemyController
     {
         base.Update();
         Search();
+
         //if (alreadyFoundPlayer)
         //{
         //    BattleStart();

@@ -18,18 +18,24 @@ public class Nembee : MonoBehaviour
     private Vector3 playerDir;
     private Vector3 lookAngle;
     [SerializeField] private LayerMask obsticleMask;
-    [SerializeField] [Range(0, 20)] private float range;
+    [SerializeField] private LayerMask playerMask;
+    [SerializeField] [Range(0, 20)] public float range;
     [SerializeField] [Range(0, 20)] private int jumpHeight;
     [SerializeField] [Range(0, 10)] private float jumpSpeed;
     [SerializeField] [Range(0, 2)] private int currentAction;
-
+    [SerializeField] [Range(0, 10)] private int journeyTime;
+    [SerializeField] [Range(0, 360)] private float prepareAngle;
+    [SerializeField] [Range(0, 1)] private float prepareSpeed;
+    private Vector3 preparePos;
     private Rigidbody rig;
 
     private void Start()
     {
         tree = FindObjectOfType<Tree>();
         rig = GetComponent<Rigidbody>();
-        StartCoroutine(CallJakos());
+        //StartCoroutine(HopOn("Rock"));
+        //StartCoroutine(ThrowFruit());
+        //StartCoroutine(CallJakos());
     }
 
     private void Update()
@@ -91,6 +97,11 @@ public class Nembee : MonoBehaviour
         {
             rig.velocity = Vector3.ClampMagnitude(rig.velocity, speed);
         }
+    }
+
+    private void PrepareAttack()
+    {
+        GetPlayerInfo();
     }
 
     private IEnumerator HopOn(string _obsticle)
@@ -164,6 +175,14 @@ public class Nembee : MonoBehaviour
     private float ThreePointBezier(float a, float b, float c)
     {
         return b + Mathf.Pow((1 - t), 2) * (a - b) + Mathf.Pow(t, 2) * (c - b);
+    }
+
+    private float FourPointBezier(float a, float b, float c, float d)
+    {
+        return Mathf.Pow((1 - t), 3) * a
+          + Mathf.Pow((1 - t), 2) * 3 * t * b
+          + Mathf.Pow(t, 2) * (1 - t) * 3 * c
+          + Mathf.Pow(t, 3) * d;
     }
 
     private void GetPlayerInfo()
