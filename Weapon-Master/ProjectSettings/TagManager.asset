@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Plane
   - Obsticle
+  - Rock
+  - Tree
   layers:
   - Default
   - TransparentFX

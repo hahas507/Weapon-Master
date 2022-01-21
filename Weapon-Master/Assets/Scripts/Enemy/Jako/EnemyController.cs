@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class EnemyControllerTest : MonoBehaviour
+public abstract class EnemyController : MonoBehaviour
 {
     [SerializeField] private float speed;
 
@@ -31,6 +31,7 @@ public abstract class EnemyControllerTest : MonoBehaviour
 
     protected Rigidbody rig;
     protected Animator anim;
+    protected RuntimeAnimatorController ac;
 
     protected virtual void Start()
     {
@@ -38,14 +39,11 @@ public abstract class EnemyControllerTest : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         range = searchRange;
+        ac = anim.runtimeAnimatorController;
     }
 
     protected virtual void Update()
     {
-        //Search();
-        //Debug.Log("alreadyFoundPlayer: " + alreadyFoundPlayer);
-        //Debug.Log("alreadyBattleStarted: " + alreadyBattleStarted);
-        //Debug.Log("alreadInAction: " + alreadyInAction);
     }
 
     protected virtual void Search()
@@ -79,12 +77,6 @@ public abstract class EnemyControllerTest : MonoBehaviour
             range = searchRange;
         }
 
-        //if (alreadyFoundPlayer)
-        //{
-        //    Follow();
-        //    BattleStart();
-        //}
-        //else
         if (!alreadyFoundPlayer || detectedTargets.Count == 0)
         {
             range = searchRange;
@@ -109,7 +101,7 @@ public abstract class EnemyControllerTest : MonoBehaviour
         else return;
     }
 
-    private float GetDegree(Vector3 _from, Vector3 _to)
+    protected float GetDegree(Vector3 _from, Vector3 _to)
     {
         return Mathf.Atan2(_from.x - _to.x, _from.z - _to.z) * Mathf.Rad2Deg;
     }
@@ -133,59 +125,58 @@ public abstract class EnemyControllerTest : MonoBehaviour
         }
     }
 
-    public enum ACTIONS
+    protected float ClipDuration(string clipName)
     {
-        IDLE,
-        ATTACK1,
-        ATTACK2,
-        ATTACK3,
-        ATTACK4, //FIGHTs are types of combat. Something like bash, slash, kick. etc.
-        RETREAT,
-    }
-
-    public ACTIONS actions;
-
-    private void RandomActions()
-    {
-        int decision = Random.Range(0, System.Enum.GetValues(typeof(ACTIONS)).Length); //FOLLOW is not included.
-        actions = (ACTIONS)decision;
-
-        switch (actions)
+        for (int i = 0; i < ac.animationClips.Length; i++)
         {
-            case ACTIONS.ATTACK1:
-                //Attack1();
-                break;
-
-            case ACTIONS.ATTACK2:
-                //Attack2();
-                break;
-
-            case ACTIONS.ATTACK3:
-                //Attack2();
-                break;
-
-            case ACTIONS.ATTACK4:
-                //Attack2();
-                break;
-
-            case ACTIONS.RETREAT:
-                //Retreat();
-                break;
+            if (ac.animationClips[i].name == clipName)
+            {
+                clipTime = ac.animationClips[i].length;
+            }
         }
+        return clipTime;
     }
 
     protected abstract void JakoAttack();
 
-    //protected float GetClipLength(AnimationClip[] _clips, string clipName)
+    //public enum ACTIONS
     //{
-    //    AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
-    //    for (int i = 0; i < clips.Length; i++)
-    //    {
-    //        if ()
-    //        {
-    //        }
-    //    }
+    //    IDLE,
+    //    ATTACK1,
+    //    ATTACK2,
+    //    ATTACK3,
+    //    ATTACK4, //FIGHTs are types of combat. Something like bash, slash, kick. etc.
+    //    RETREAT,
+    //}
 
-    //    return clipTime;
+    //public ACTIONS actions;
+
+    //private void RandomActions()
+    //{
+    //    int decision = Random.Range(0, System.Enum.GetValues(typeof(ACTIONS)).Length); //FOLLOW is not included.
+    //    actions = (ACTIONS)decision;
+
+    //    switch (actions)
+    //    {
+    //        case ACTIONS.ATTACK1:
+    //            //Attack1();
+    //            break;
+
+    //        case ACTIONS.ATTACK2:
+    //            //Attack2();
+    //            break;
+
+    //        case ACTIONS.ATTACK3:
+    //            //Attack2();
+    //            break;
+
+    //        case ACTIONS.ATTACK4:
+    //            //Attack2();
+    //            break;
+
+    //        case ACTIONS.RETREAT:
+    //            //Retreat();
+    //            break;
+    //    }
     //}
 }
