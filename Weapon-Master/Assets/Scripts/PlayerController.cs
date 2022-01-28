@@ -7,25 +7,30 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float sightRange;
     public float rotateSpeed;
+    public float dodgeTimer;
     public Camera theCamera;
     public int maxHP;
 
     float moveDirX;
     float moveDirZ;
+    bool isDodge;
     int currHP;
     int targetIdx;
 
+    Vector3 velocity;
     GameObject[] monsters;
     GameObject targetMonster;
     SpawnManager spm;
     Rigidbody rb;
-    CapsuleCollider capsuleCollider;
+    Animator anim;
+    BoxCollider boxCollider;
     List<GameObject> activeMonsters = new List<GameObject>();
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
+        anim = GetComponentInChildren<Animator>();
+        boxCollider = GetComponent<BoxCollider>();
         spm = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
     }
 
@@ -38,6 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         GetAxis();
         if (Input.GetKeyDown(KeyCode.Escape)) UnityEditor.EditorApplication.isPlaying = false; //quit game
+        if (Input.GetKeyDown(KeyCode.Space)) Dodge();
 
         monsters = GameObject.FindGameObjectsWithTag("Enemy"); //all monsters on field
         SwitchTarget(GetInSightMonsters(monsters));
@@ -58,7 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 moveHorizontal = transform.right * moveDirX;
         Vector3 moveVertical = transform.forward * moveDirZ;
-        Vector3 velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
+        velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
 
         rb.MovePosition(transform.position + velocity * Time.deltaTime);
     }
@@ -140,5 +146,26 @@ public class PlayerController : MonoBehaviour
             Vector3 dir = targetMonster.transform.position - this.transform.position;
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), rotateSpeed * Time.deltaTime);   
         }
+    }
+
+    void Dodge()
+    {
+        if (!isDodge && velocity != Vector3.zero)
+        {
+            anim.SetTrigger("Dodge");
+            StartCoroutine(DodgeDelay());
+        }
+    }
+
+    IEnumerator DodgeDelay()
+    {
+        moveSpeed *= 2;
+        isDodge = true;
+        boxCollider.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        moveSpeed *= 0.5f;
+        boxCollider.enabled = true;
+        yield return new WaitForSeconds(dodgeTimer);
+        isDodge = false;
     }
 }
