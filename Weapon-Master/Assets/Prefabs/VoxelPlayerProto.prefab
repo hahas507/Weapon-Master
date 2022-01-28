@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 7045260262286073563}
   - component: {fileID: 7269188164876622681}
   m_Layer: 0
-  m_Name: VoxelPlayer
+  m_Name: VoxelPlayerProto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
