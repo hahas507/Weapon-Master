@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class PlayerController : MonoBehaviour
     public float rotateSpeed;
     public float dodgeTimer;
     public Camera theCamera;
+    public Text noEnemyText;
     public int maxHP;
 
     float moveDirX;
     float moveDirZ;
     bool isDodge;
+    bool initRotate;
+    bool completeInitRotate = true;
     int currHP;
     int targetIdx;
 
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        GetAxis();
+        PlayerMove();
         if (Input.GetKeyDown(KeyCode.Escape)) UnityEditor.EditorApplication.isPlaying = false; //quit game
         if (Input.GetKeyDown(KeyCode.Space)) Dodge();
 
@@ -49,24 +53,12 @@ public class PlayerController : MonoBehaviour
         SwitchTarget(GetInSightMonsters(monsters));
     }
 
-    void FixedUpdate()
-    {
-        PlayerMove();
-    }
-
-    void GetAxis()
+    void PlayerMove()
     {
         moveDirX = Input.GetAxisRaw("Horizontal");
         moveDirZ = Input.GetAxisRaw("Vertical");
-    }
-
-    void PlayerMove()
-    {
-        Vector3 moveHorizontal = transform.right * moveDirX;
-        Vector3 moveVertical = transform.forward * moveDirZ;
-        velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
-
-        rb.MovePosition(transform.position + velocity * Time.deltaTime);
+        this.transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed * moveDirZ);
+        this.transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * moveDirX);
     }
 
     void OnTriggerEnter(Collider other)
@@ -125,26 +117,65 @@ public class PlayerController : MonoBehaviour
 
     void SwitchTarget(List<GameObject> targets)
     {
-        if(targets.Count == 0) return;
+        if(!completeInitRotate) return;
 
-        targetIdx = targets.IndexOf(targetMonster); //get index of target
-        if (Input.GetKeyDown(KeyCode.Q)) //shift left
+        targetIdx = GetInSightMonsters(monsters).IndexOf(targetMonster); //get index of target
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
         {
-            if (!targets.Contains(targetMonster)) targetMonster = targets[0];
-            else targetIdx = targets.IndexOf(targetMonster) - 1; //previous monster
+            if (targets.Count == 0)
+            {
+                noEnemyText.gameObject.SetActive(true);
+                StartCoroutine(TextFadeOut());
+                return;
+            }
+
+            if (!targets.Contains(targetMonster) || initRotate)
+            {
+                targetMonster = targets[0];
+                targetIdx = 0;
+            }
+
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.Q)) targetIdx = targets.IndexOf(targetMonster) - 1; //previous monster
+                if (Input.GetKeyDown(KeyCode.E)) targetIdx = targets.IndexOf(targetMonster) + 1; //next monster
+            }
+            initRotate = false;
         }
-        if (Input.GetKeyDown(KeyCode.E)) //shift right
-        {
-            if (!targets.Contains(targetMonster)) targetMonster = targets[0];
-            else targetIdx = targets.IndexOf(targetMonster) + 1; //next monster
+
+        if (Input.GetKeyDown(KeyCode.Z)) //quit targeting mode, init rotation of player
+        { 
+            initRotate = true;
+            completeInitRotate = false;
+            StartCoroutine(RotateTo(Quaternion.identity));
         }
-        
-        if (targetMonster) //not null
+
+        if (targetMonster && !initRotate) //not null
         {
-           targetIdx = Mathf.Clamp(targetIdx, 0, targets.Count-1);
-            targetMonster = targets[targetIdx]; 
+            targetIdx = Mathf.Clamp(targetIdx, 0, targets.Count - 1);
+            targetMonster = targets[targetIdx];
             Vector3 dir = targetMonster.transform.position - this.transform.position;
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), rotateSpeed * Time.deltaTime);   
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), rotateSpeed * Time.deltaTime);
+        }
+    }
+
+    IEnumerator RotateTo(Quaternion rot)
+    {
+        while (this.transform.rotation != rot)
+        {
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 1.5f * rotateSpeed * Time.deltaTime);
+            yield return null;
+        }
+        completeInitRotate = true;
+    }
+
+    IEnumerator TextFadeOut(){
+        noEnemyText.color = new Color(noEnemyText.color.r, noEnemyText.color.g, noEnemyText.color.b, 1);
+        while (noEnemyText.color.a > 0.0f)
+        {
+            noEnemyText.color = new Color(noEnemyText.color.r, noEnemyText.color.g, noEnemyText.color.b, noEnemyText.color.a - (Time.deltaTime / 2.0f));
+            if(noEnemyText.color.a <= 0.0f) noEnemyText.gameObject.SetActive(false);
+            yield return null;
         }
     }
 
