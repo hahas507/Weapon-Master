@@ -5,10 +5,16 @@ using System.Linq;
 
 public abstract class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField]
+    private float speed;
+    [SerializeField] 
+    public float hp;
+    [SerializeField]
+    private int damage;
 
     [Range(0, 100)]
-    [SerializeField] public float searchRange;[System.NonSerialized] public float range;//need to change to private.
+    [SerializeField] public float searchRange;
+    [System.NonSerialized] public float range;//need to change to private.
 
     [Range(0, 100)]
     [SerializeField] public float battleRange;
@@ -32,6 +38,16 @@ public abstract class EnemyController : MonoBehaviour
     protected Rigidbody rig;
     protected Animator anim;
     protected RuntimeAnimatorController ac;
+
+    protected SkinnedMeshRenderer meshRenderer;
+    protected Color originColor;
+
+
+    protected virtual void Awake()
+    {
+        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        originColor = meshRenderer.material.color;
+    }
 
     protected virtual void Start()
     {
@@ -138,6 +154,55 @@ public abstract class EnemyController : MonoBehaviour
     }
 
     protected abstract void JakoAttack();
+
+
+    //적이 피격받았을 때 데미지 받음
+    public virtual void TakeDamage(int damage)
+    {
+        Debug.Log(damage + "체력 감소");
+        hp = DecreaseHp(hp, damage);
+        //피격받았음을 나타내는 빨간색 효과
+        StartCoroutine(OnHitColor());
+    }
+
+    protected IEnumerator OnHitColor()
+    {
+        meshRenderer.material.color = Color.red;
+
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log(hp);
+        meshRenderer.material.color = originColor;
+    }
+
+    //체력 감소
+    public float DecreaseHp(float hp, int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            hp = 0;
+            Dead(hp);
+        }
+        return hp;
+    }
+
+    protected virtual void Dead(float hp)
+    {
+        if (hp <= 0)
+        {
+            anim.SetTrigger("Dead");
+            Destroy(gameObject, 0.5f);
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            Debug.Log("플레이어");
+            other.GetComponent<PlayerController>().TakeDamage(damage);
+        }
+    }
 
     //public enum ACTIONS
     //{
