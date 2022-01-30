@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Plane
+  - Obsticle
+  - Rock
+  - Tree
   layers:
   - Default
   - TransparentFX
