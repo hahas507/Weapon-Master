@@ -5,7 +5,7 @@ using UnityEngine;
 public class Status : MonoBehaviour
 {
     [SerializeField] [Range(0, 100)] protected int thisHP;
-    protected int HP;
+    [SerializeField] [Range(0, 100)] protected int HP;
     protected bool isDead = false;
 
     [SerializeField] [Range(0, 100)] protected int thisATK;

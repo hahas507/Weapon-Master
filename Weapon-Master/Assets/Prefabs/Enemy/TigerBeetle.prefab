@@ -719,7 +719,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7821328311485708178}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.2915053
   m_Height: 4.4738436
@@ -739,7 +739,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &-8557615495561626412
 MonoBehaviour:
@@ -753,9 +753,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f59bcc61a3d3c24ab22eb4bdc09a40a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisHP: 0
+  HP: 0
+  thisATK: 0
   speed: 2
-  hp: 20
-  damage: 0
   searchRange: 20.4
   battleRange: 15.4
   playerMask:
@@ -768,7 +769,7 @@ MonoBehaviour:
   jumpHeight: 9.7
   jumpPrepareTime: 2
   attackDelay: 1
-  randomJumpRange: 7
+  randomJumpRange: 4
 --- !u!1 &8377472861766130282
 GameObject:
   m_ObjectHideFlags: 0

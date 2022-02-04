@@ -34,6 +34,10 @@ public class Nembee : Status
     [SerializeField] [Range(0, 4)] private float recoverTime;
 
     private bool isIdle = false;
+    private bool phase_1 = false;
+    private bool phase_2 = false;
+    private bool throwing = false;
+    private bool calling = false;
 
     private Rigidbody rig;
 
@@ -50,6 +54,7 @@ public class Nembee : Status
     private void Update()
     {
         Actions(currentAction);
+        CheckHP();
     }
 
     public enum CURRENTACTION
@@ -63,6 +68,8 @@ public class Nembee : Status
         ATTACK_1,
         ATTACK_2,
         REPOSITION,
+        PHASE_1,
+        PHASE_2,
     }
 
     public CURRENTACTION CAction;
@@ -100,9 +107,26 @@ public class Nembee : Status
                 RePosition();
                 break;
 
+            case CURRENTACTION.PHASE_1:
+                RePosition();
+                break;
+
             default:
                 rig.velocity = Vector3.zero * 0;
                 break;
+        }
+    }
+
+    private void CheckHP()
+    {
+        if (HP < thisHP * .66f)
+        {
+            Phase_1();
+
+            if (HP < thisHP * .33f)
+            {
+                Phase_2();
+            }
         }
     }
 
@@ -154,6 +178,28 @@ public class Nembee : Status
         if (!alreadyInAction)
         {
             StartCoroutine(JumpTo());
+        }
+    }
+
+    private void Phase_1() //Throw fruit
+    {
+        if (!phase_1)
+        {
+            Debug.Log("Phase_1");
+            StopAllCoroutines();
+            StartCoroutine(HopOn("Tree"));
+            phase_1 = true;
+        }
+    }
+
+    private void Phase_2() //Call Jakos
+    {
+        if (!phase_2)
+        {
+            Debug.Log("Phase_2");
+            StopAllCoroutines();
+            StartCoroutine(HopOn("Rock"));
+            phase_2 = true;
         }
     }
 
@@ -354,7 +400,20 @@ public class Nembee : Status
                    ThreePointBezier(startPoint.z, passPoint.z, landPoint.z));
                     yield return null;
                 }
-                if (t >= 1) t = 0;
+                if (t >= 1)
+                {
+                    t = 0;
+                    if (phase_1 && !throwing)
+                    {
+                        StartCoroutine(ThrowFruit());
+                        throwing = true;
+                    }
+                    else if (phase_2 && !calling)
+                    {
+                        StartCoroutine(CallJakos());
+                        calling = true;
+                    }
+                }
             }
         }
     }
