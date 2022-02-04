@@ -17,15 +17,13 @@ public class Stagbeetle : EnemyController
 
     private Vector3 launchDir;
 
-    protected override void Start()
+    private void Update()
     {
-        base.Start();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        Search();
+        if (!isDead)
+        {
+            Search();
+        }
+        else return;
     }
 
     protected override void Search()

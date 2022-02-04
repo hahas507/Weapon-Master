@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nembee : MonoBehaviour
+public class Nembee : Status
 {
     private float t = 0;
     [SerializeField] [Range(0, 20)] private float speed, walkSpeed;

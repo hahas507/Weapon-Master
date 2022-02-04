@@ -12,10 +12,13 @@ public class Fruit : MonoBehaviour
     [SerializeField] [Range(0, 5)] private int speed;
     [SerializeField] [Range(0, 20)] private int height;
     [SerializeField] [Range(0, 5)] private int range;
+    [SerializeField] [Range(0, 10)] private int damage;
+    private Status status;
 
     private void Awake()
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+        status = FindObjectOfType<Status>();
     }
 
     private void Start()
@@ -46,5 +49,13 @@ public class Fruit : MonoBehaviour
     private float ThreePointBezier(float a, float b, float c)
     {
         return b + Mathf.Pow((1 - t), 2) * (a - b) + Mathf.Pow(t, 2) * (c - b);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            status.Damage(damage);
+        }
     }
 }

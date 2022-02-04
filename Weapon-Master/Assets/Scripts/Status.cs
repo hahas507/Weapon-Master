@@ -16,7 +16,7 @@ public class Status : MonoBehaviour
         HP = thisHP;
     }
 
-    protected void Damage(int dmg)
+    public virtual void Damage(int dmg)
     {
         if (!isDead)
         {

@@ -42,8 +42,11 @@ public abstract class EnemyController : Status
         ac = anim.runtimeAnimatorController;
     }
 
-    protected virtual void Update()
+    private void BoolDebug()
     {
+        Debug.Log("alreadyFoundPlayer: " + alreadyFoundPlayer);
+        Debug.Log("alreadyBattleStarted: " + alreadyBattleStarted);
+        Debug.Log("alreadyInAction: " + alreadyInAction);
     }
 
     protected virtual void Search()
