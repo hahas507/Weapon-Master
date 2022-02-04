@@ -52,6 +52,7 @@ public class TIgerbeetle : EnemyController
 
     protected override void JakoAttack()
     {
+        Debug.Log("called");
         StartCoroutine(JumpTo());
     }
 

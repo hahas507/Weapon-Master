@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class EnemyController : MonoBehaviour
+public abstract class EnemyController : Status
 {
     [SerializeField] private float speed;
 

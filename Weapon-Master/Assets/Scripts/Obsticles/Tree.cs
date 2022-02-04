@@ -11,9 +11,4 @@ public class Tree : MonoBehaviour
         get { return isTreeDown; }
         private set { isTreeDown = value; }
     }
-
-    //private void Awake()
-    //{
-    //    isTreeDown = false;
-    //}
 }

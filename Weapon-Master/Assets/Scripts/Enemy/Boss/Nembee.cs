@@ -168,7 +168,7 @@ public class Nembee : MonoBehaviour
             rig.velocity = Vector3.zero;
             transform.eulerAngles = lookAngle;
             launchDir = atkDir;
-            Debug.Log(launchDir.magnitude);
+
             if (launchDir.magnitude <= 1)
             {
                 launchDir = transform.forward * 5;
