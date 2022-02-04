@@ -10,6 +10,8 @@ public class NembeeEditor : Editor
     {
         Nembee nembee = (Nembee)target;
         Handles.color = Color.red;
-        Handles.DrawWireArc(nembee.transform.position, Vector3.up, Vector3.forward, 360, nembee.range);
+        //Handles.DrawWireArc(nembee.transform.position, Vector3.up, Vector3.forward, 360, nembee.range);
+        //Handles.color = Color.green;
+        Handles.DrawWireArc(nembee.transform.position, Vector3.up, Vector3.forward, 360, nembee.followStopRange);
     }
 }
