@@ -120,15 +120,12 @@ public void DungeonCreate()
             //보스룸에 도달하면 반복문 종료
             if (posArr[row, col].roomName == "Boss")
             {
-                Debug.Log(count);
-                Debug.Log("정상");
                 break;
             }
             //오류 체크
             else if (count >= 30)
             {
                 Debug.Log(count);
-                Debug.Log("실패");
                 break;
             }
         }

@@ -221,7 +221,6 @@ public class SubRoom : MonoBehaviour
             wallType = wallStr;
         else
         {
-            Debug.Log("ªË¡¶");
             wallType = "None";
             this.gameObject.SetActive(false);
         }

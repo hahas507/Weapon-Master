@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Singleton<Player>
+public class Player_mapgen : Singleton<Player_mapgen>
 {
-    public static Player self;
+    public static Player_mapgen self;
     public float speed = 5.0f;
 
     public float horizontal;
     public float vertical;
 
     public bool moveBool = true;
+    public bool isAttack = false;
+
+    public Animator anim;
+
+    [SerializeField]
+    private GameObject attackCheck;
+
     void Start()
     {
         if (self == null)
@@ -30,6 +37,15 @@ public class Player : Singleton<Player>
     {
         if (moveBool)
             PlayerMove();
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            anim.SetTrigger("ComboAttack1");
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            anim.SetTrigger("ComboAttack2");
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -44,28 +60,28 @@ public class Player : Singleton<Player>
             {
                 Debug.Log("¿Þ");
                 Vector3 currPos = new Vector3(nextDoor.transform.position.x + 1.5f, 0.5f, nextDoor.transform.position.z);
-                Player.Instance.transform.position = currPos;
+                Player_mapgen.Instance.transform.position = currPos;
             }
             else if (nextDoor.doorType == Door.DoorType.right)
             {
                 Debug.Log("¿À");
 
                 Vector3 currPos = new Vector3(nextDoor.transform.position.x - 1.5f, 0.5f, nextDoor.transform.position.z);
-                Player.Instance.transform.position = currPos;
+                Player_mapgen.Instance.transform.position = currPos;
             }
             else if (nextDoor.doorType == Door.DoorType.top)
             {
                 Debug.Log("À§");
 
                 Vector3 currPos = new Vector3(nextDoor.transform.position.x, 0.5f, nextDoor.transform.position.z - 1.5f);
-                Player.Instance.transform.position = currPos;
+                Player_mapgen.Instance.transform.position = currPos;
             }
             else
             {
                 Debug.Log("¾Æ·¡");
 
                 Vector3 currPos = new Vector3(nextDoor.transform.position.x , 0.5f, nextDoor.transform.position.z + 1.5f);
-                Player.Instance.transform.position = currPos;
+                Player_mapgen.Instance.transform.position = currPos;
             }
 
 
@@ -73,4 +89,21 @@ public class Player : Singleton<Player>
 
         }
     }
+
+    public void IsAttack()
+    {
+        moveBool = false;
+    }
+
+    public void IsAttackReturn()
+    {
+        moveBool = true;
+    }
+
+    public void OnAttack()
+    {
+        attackCheck.SetActive(true);
+    }
+
+
 }
