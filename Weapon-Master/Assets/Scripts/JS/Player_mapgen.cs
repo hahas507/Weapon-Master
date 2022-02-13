@@ -5,48 +5,47 @@ using UnityEngine;
 public class Player_mapgen : Singleton<Player_mapgen>
 {
     public static Player_mapgen self;
-    public float speed = 5.0f;
+    //public float speed = 5.0f;
 
-    public float horizontal;
-    public float vertical;
+    //public float horizontal;
+    //public float vertical;
 
-    public bool moveBool = true;
-    public bool isAttack = false;
+    //public bool moveBool = true;
+    //public bool isAttack = false;
 
-    public Animator anim;
+    //public Animator anim;
 
-    [SerializeField]
-    private GameObject attackCheck;
+    //[SerializeField]
+    //private GameObject attackCheck;
 
-    void Start()
+    private void Start()
     {
         if (self == null)
             self = this;
-
     }
 
-    public void PlayerMove()
-    {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+    //public void PlayerMove()
+    //{
+    //    horizontal = Input.GetAxis("Horizontal");
+    //    vertical = Input.GetAxis("Vertical");
 
-        transform.position += new Vector3(horizontal, 0, vertical) * speed * Time.deltaTime;
-    }
+    //    transform.position += new Vector3(horizontal, 0, vertical) * speed * Time.deltaTime;
+    //}
 
-    void Update()
-    {
-        if (moveBool)
-            PlayerMove();
+    //private void Update()
+    //{
+    //    if (moveBool)
+    //        PlayerMove();
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            anim.SetTrigger("ComboAttack1");
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            anim.SetTrigger("ComboAttack2");
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.Z))
+    //    {
+    //        anim.SetTrigger("ComboAttack1");
+    //    }
+    //    else if (Input.GetKeyDown(KeyCode.X))
+    //    {
+    //        anim.SetTrigger("ComboAttack2");
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -80,30 +79,24 @@ public class Player_mapgen : Singleton<Player_mapgen>
             {
                 Debug.Log("¾Æ·¡");
 
-                Vector3 currPos = new Vector3(nextDoor.transform.position.x , 0.5f, nextDoor.transform.position.z + 1.5f);
+                Vector3 currPos = new Vector3(nextDoor.transform.position.x, 0.5f, nextDoor.transform.position.z + 1.5f);
                 Player_mapgen.Instance.transform.position = currPos;
             }
-
-
-
-
         }
     }
 
-    public void IsAttack()
-    {
-        moveBool = false;
-    }
+    //public void IsAttack()
+    //{
+    //    moveBool = false;
+    //}
 
-    public void IsAttackReturn()
-    {
-        moveBool = true;
-    }
+    //public void IsAttackReturn()
+    //{
+    //    moveBool = true;
+    //}
 
-    public void OnAttack()
-    {
-        attackCheck.SetActive(true);
-    }
-
-
+    //public void OnAttack()
+    //{
+    //    attackCheck.SetActive(true);
+    //}
 }
