@@ -6,16 +6,14 @@ public delegate void FunctionPointer(int param);
 
 public class Spawn
 {
-    int idx;
     FunctionPointer spawnPattern;
 
-    public Spawn(int mIdx, FunctionPointer pat)
+    public Spawn(FunctionPointer pat)
     {
-        this.idx = mIdx;
         this.spawnPattern = pat;
     }
 
-    public void SpawnPattern()
+    public void SpawnPattern(int idx)
     {
         spawnPattern(idx);
     }
@@ -110,7 +108,7 @@ public class SpawnManager : MonoBehaviour
         int areaIdx = Random.Range(0, areas.Count);
         int patIdx = Random.Range(0, pattern.Length);
 
-        Spawn spawn = new Spawn(areaIdx, pattern[patIdx]);
-        spawn.SpawnPattern();
+        Spawn spawn = new Spawn(pattern[patIdx]);
+        spawn.SpawnPattern(areaIdx);
     }
 }
