@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &275630671
 Transform:
   m_ObjectHideFlags: 0
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   player: {fileID: 6564961521904710818}
+  attackCheckPlus: {x: 0, y: 1, z: 1.5}
 --- !u!1 &374852675
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,7 +2113,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &2491700575824764761
 BoxCollider:
@@ -2126,7 +2127,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &2491700575824764760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3176,7 +3177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391701613382604147, guid: fc545acb2c4c85a4dba282b1ac954a5d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.04
+      value: 0.035
       objectReference: {fileID: 0}
     - target: {fileID: 5391701613382604147, guid: fc545acb2c4c85a4dba282b1ac954a5d, type: 3}
       propertyPath: m_LocalScale.y
@@ -3196,7 +3197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391701613382604147, guid: fc545acb2c4c85a4dba282b1ac954a5d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.191
+      value: 0.165
       objectReference: {fileID: 0}
     - target: {fileID: 5391701613382604147, guid: fc545acb2c4c85a4dba282b1ac954a5d, type: 3}
       propertyPath: m_LocalRotation.w
