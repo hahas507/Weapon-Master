@@ -38,7 +38,7 @@ public class RoomManager : Singleton<RoomManager>
         loadedRooms.Clear();
 
         //플레이어 위치 초기화(처음위치로)
-        Player.Instance.transform.position = new Vector3(0, 0.5f, 0);
+        Player_mapgen.Instance.transform.position = new Vector3(0, 0.5f, 0);
         //맵 생성
         DungeonCreator.Instance.DungeonCreate();
 
