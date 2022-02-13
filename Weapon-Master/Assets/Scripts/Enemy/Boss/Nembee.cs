@@ -13,6 +13,7 @@ public class Nembee : Status
     [SerializeField] [Range(1, 10)] private int spawnHowMany;
     [SerializeField] [Range(1, 15)] private int spawnRange;
     [SerializeField] [Range(1, 5)] private int fruitTimer;
+    [SerializeField] [Range(1, 5)] private int launchCount;
     private Tree tree;
     private Vector3 playerPos;
     private Vector3 playerDir;
@@ -45,16 +46,14 @@ public class Nembee : Status
     {
         tree = FindObjectOfType<Tree>();
         rig = GetComponent<Rigidbody>();
-        //StartCoroutine(HopOn("Rock"));
-        //StartCoroutine(ThrowFruit());
-        //StartCoroutine(CallJakos());
         currentAction = 3;
     }
 
     private void Update()
     {
         Actions(currentAction);
-        CheckHP();
+
+        Debug.Log("isIdle: " + isIdle);
     }
 
     public enum CURRENTACTION
@@ -139,6 +138,7 @@ public class Nembee : Status
             recoverTime = 4;
             while (recoverTime >= 0)
             {
+                CheckHP();
                 recoverTime -= Time.deltaTime;
                 yield return null;
             }
@@ -386,12 +386,18 @@ public class Nembee : Status
         {
             if (_target[i].transform.tag == _obsticle)
             {
+                //bool inAir = true;
                 Vector3 targetObs = _target[i].transform.position;
                 Vector3 startPoint = transform.position;
                 Vector3 landPoint = targetObs + Vector3.up * 4;
                 Vector3 passPoint = landPoint + Vector3.up * jumpHeight;
                 while (t <= 1)
                 {
+                    //if (Physics.Raycast(transform.position, -transform.up, 1f, obsticleMask))
+                    //{
+                    //    inAir = false;
+                    //    break;
+                    //}
                     t += Time.deltaTime * jumpSpeed;
                     transform.eulerAngles = Vector3.up * (GetDegree(startPoint, landPoint));
                     transform.position = new Vector3(
@@ -400,7 +406,7 @@ public class Nembee : Status
                    ThreePointBezier(startPoint.z, passPoint.z, landPoint.z));
                     yield return null;
                 }
-                if (t >= 1)
+                if (t >= 1 /*|| !inAir*/)
                 {
                     t = 0;
                     if (phase_1 && !throwing)
@@ -428,31 +434,64 @@ public class Nembee : Status
             timer += Time.deltaTime;
             if (timer >= fruitTimer)
             {
-                GameObject clone = Instantiate(fruit, transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-                clone = Instantiate(fruit, transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-                clone = Instantiate(fruit, transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-                clone = Instantiate(fruit, transform.position, Quaternion.identity);
-                yield return new WaitForSeconds(0.4f);
-                clone = Instantiate(fruit, transform.position, Quaternion.identity);
+                for (int i = 0; i < launchCount; i++)
+                {
+                    if (tree.ISTREEDOWN)
+                    {
+                        StartCoroutine(Fall());
+                        StopCoroutine(ThrowFruit());
+                        yield return null;
+                    }
+                    Instantiate(fruit, transform.position, Quaternion.identity);
+                    yield return new WaitForSeconds(0.4f);
+                }
                 timer = 0;
             }
             yield return null;
+        }
+        if (tree.ISTREEDOWN)
+        {
+            StartCoroutine(Fall());
+            StopCoroutine(ThrowFruit());
+            yield return null;
+        }
+    }
+
+    private IEnumerator Fall()
+    {
+        Debug.Log("fall start.");
+        Vector3 startPoint = transform.position;
+        Vector3 landPoint = new Vector3(transform.position.x, 0, transform.position.z) + (new Vector3(Random.onUnitSphere.x, 0, Random.onUnitSphere.z)) * 10;
+        Vector3 passPoint = landPoint + Vector3.up * jumpHeight * .75f;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime * speed * 0.4f;
+            transform.position = new Vector3(
+                       ThreePointBezier(startPoint.x, passPoint.x, landPoint.x),
+                       ThreePointBezier(startPoint.y, passPoint.y, landPoint.y),
+                       ThreePointBezier(startPoint.z, passPoint.z, landPoint.z));
+
+            yield return null;
+        }
+        if (t >= 1)
+        {
+            currentAction = 1;
+            isIdle = false;
         }
     }
 
     private IEnumerator CallJakos()
     {
         //after animation
-        while (spawnHowMany > 0)
+        for (int i = 0; i < spawnHowMany; i++)
         {
             int spawn = Random.Range(0, Jakos.Length);
-            GameObject clone = Instantiate(Jakos[spawn], transform.position + new Vector3(Random.onUnitSphere.x, 0, Random.onUnitSphere.z) * spawnRange, Quaternion.identity);
-            spawnHowMany--;
+            GameObject clone = Instantiate(Jakos[spawn], transform.position + new Vector3(Random.onUnitSphere.x, 0, Random.onUnitSphere.z) * spawnRange - (transform.up * transform.position.y), Quaternion.identity);
             yield return new WaitForSeconds(.7f);
         }
+        yield return new WaitForSeconds(6);
+        StartCoroutine(Fall());
     }
 
     #region math
