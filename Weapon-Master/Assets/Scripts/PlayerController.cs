@@ -11,14 +11,12 @@ public class PlayerController : MonoBehaviour
     public float dodgeTimer;
     public Camera theCamera;
     public Text noEnemyText;
-    public int maxHP;
 
     float moveDirX;
     float moveDirZ;
     bool isDodge;
     bool initRotate;
     bool completeInitRotate = true;
-    int currHP;
     int targetIdx;
 
     Vector3 velocity;
@@ -38,27 +36,45 @@ public class PlayerController : MonoBehaviour
         spm = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
     }
 
-    void Start()
-    {
-        currHP = maxHP;
-    }
-
     void Update()
     {
-        PlayerMove();
+        moveDirX = Input.GetAxisRaw("Horizontal");
+        moveDirZ = Input.GetAxisRaw("Vertical");
+        SetAnimParameter((int)moveDirX, (int)moveDirZ);
+
         if (Input.GetKeyDown(KeyCode.Escape)) UnityEditor.EditorApplication.isPlaying = false; //quit game
         if (Input.GetKeyDown(KeyCode.Space)) Dodge();
 
         monsters = GameObject.FindGameObjectsWithTag("Enemy"); //all monsters on field
+
+        if (targetMonster && !IsTargetVisible(targetMonster)) //if target is out of range
+        {
+            targetMonster = null;
+            StartCoroutine(InitPlayerRotation());
+        }
+
         SwitchTarget(GetInSightMonsters(monsters));
+    }
+
+    void SetAnimParameter(int x, int z)
+    {
+        anim.SetBool("isRun", !(x == 0 && z == 0));
+        anim.SetInteger("DirX", x);
+        anim.SetInteger("DirZ", z);
+    }
+
+    void FixedUpdate()
+    {
+        PlayerMove();
     }
 
     void PlayerMove()
     {
-        moveDirX = Input.GetAxisRaw("Horizontal");
-        moveDirZ = Input.GetAxisRaw("Vertical");
-        this.transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed * moveDirZ);
-        this.transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * moveDirX);
+        Vector3 moveHorizontal = this.transform.right * moveDirX;
+        Vector3 moveVertical = this.transform.forward * moveDirZ;
+        Vector3 velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
+
+        rb.MovePosition(this.transform.position + velocity * Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider other)
@@ -73,10 +89,8 @@ public class PlayerController : MonoBehaviour
     bool IsTargetVisible(GameObject target) //determine if object is in camera sight
     {
         if (!IsTargetInRange(target)) return false; //if object is out of range
-
         var planes = GeometryUtility.CalculateFrustumPlanes(theCamera);
         var point = target.transform.position;
-
         foreach (var plane in planes)
         {
             if (plane.GetDistanceToPoint(point) < 0) return false;
@@ -117,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
     void SwitchTarget(List<GameObject> targets)
     {
-        if(!completeInitRotate) return;
+        if (!completeInitRotate) return;
 
         targetIdx = GetInSightMonsters(monsters).IndexOf(targetMonster); //get index of target
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
@@ -128,13 +142,11 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(TextFadeOut());
                 return;
             }
-
             if (!targets.Contains(targetMonster) || initRotate)
             {
                 targetMonster = targets[0];
                 targetIdx = 0;
             }
-
             else
             {
                 if (Input.GetKeyDown(KeyCode.Q)) targetIdx = targets.IndexOf(targetMonster) - 1; //previous monster
@@ -144,10 +156,10 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Z)) //quit targeting mode, init rotation of player
-        { 
+        {
             initRotate = true;
             completeInitRotate = false;
-            StartCoroutine(RotateTo(Quaternion.identity));
+            StartCoroutine(InitPlayerRotation());
         }
 
         if (targetMonster && !initRotate) //not null
@@ -159,29 +171,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator RotateTo(Quaternion rot)
+    IEnumerator InitPlayerRotation()
     {
-        while (this.transform.rotation != rot)
+        while (this.transform.rotation != Quaternion.identity)
         {
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 1.5f * rotateSpeed * Time.deltaTime);
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.identity, 1.5f * rotateSpeed * Time.deltaTime);
             yield return null;
         }
         completeInitRotate = true;
     }
 
-    IEnumerator TextFadeOut(){
+    IEnumerator TextFadeOut()
+    {
         noEnemyText.color = new Color(noEnemyText.color.r, noEnemyText.color.g, noEnemyText.color.b, 1);
         while (noEnemyText.color.a > 0.0f)
         {
             noEnemyText.color = new Color(noEnemyText.color.r, noEnemyText.color.g, noEnemyText.color.b, noEnemyText.color.a - (Time.deltaTime / 2.0f));
-            if(noEnemyText.color.a <= 0.0f) noEnemyText.gameObject.SetActive(false);
+            if (noEnemyText.color.a <= 0.0f) noEnemyText.gameObject.SetActive(false);
             yield return null;
         }
     }
 
     void Dodge()
     {
-        if (!isDodge && velocity != Vector3.zero)
+        if (!isDodge)
         {
             anim.SetTrigger("Dodge");
             StartCoroutine(DodgeDelay());
