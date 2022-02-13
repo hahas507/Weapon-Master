@@ -671,6 +671,7 @@ PlayerSettings:
     Game Performance: 0
     Purchasing: 0
     UDP: 0
+    Collab: 1
     UNet: 1
     Unity Ads: 0
   luminIcon:
