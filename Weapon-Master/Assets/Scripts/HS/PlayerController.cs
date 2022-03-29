@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : Status
+public class PlayerController : PlayerStatus
 {
     public static bool targetingMode = false;
 
@@ -21,10 +21,7 @@ public class PlayerController : Status
     bool completeInitRotate = true;
     int targetIdx;
 
-    Vector3 velocity;
     Vector3 targetDir;
-    Vector3 targetingCameraPos = new Vector3(0.0f, 15.0f, -10.0f);
-    Vector3 nonTargetingCameraPos = new Vector3(0.0f, 25.0f, -25.0f);
     GameObject[] monsters;
     GameObject targetMonster;
     SpawnManager spm;
@@ -38,7 +35,7 @@ public class PlayerController : Status
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         boxCollider = GetComponent<BoxCollider>();
-        spm = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
+        //spm = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
     }
 
     void Update()
@@ -46,6 +43,7 @@ public class PlayerController : Status
         moveDirX = Input.GetAxisRaw("Horizontal");
         moveDirZ = Input.GetAxisRaw("Vertical");
         SetAnimParameter((int)moveDirX, (int)moveDirZ);
+        Move();
 
         if (Input.GetKeyDown(KeyCode.Space)) Dodge();
 
@@ -54,7 +52,6 @@ public class PlayerController : Status
         if (targetMonster && !IsTargetVisible(targetMonster)) //if target is out of range
         {
             targetMonster = null;
-            theCamera.transform.localPosition = nonTargetingCameraPos;
             targetingMode = false;
             StartCoroutine(InitPlayerRotation());
         }
@@ -65,13 +62,12 @@ public class PlayerController : Status
     void SetAnimParameter(int x, int z)
     {
         anim.SetBool("isRun", !(x == 0 && z == 0));
-        anim.SetInteger("DirX", x);
-        anim.SetInteger("DirZ", z);
     }
 
     void FixedUpdate()
     {
-        PlayerMove();
+        //PlayerMove();
+        //Move();
     }
 
     void PlayerMove()
@@ -81,6 +77,19 @@ public class PlayerController : Status
         Vector3 velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
 
         rb.MovePosition(this.transform.position + velocity * Time.deltaTime);
+    }
+
+    void Move()
+    {
+        if (NPC_Controller.isTalking) return;
+
+        Vector3 dir = new Vector3(moveDirX, 0, moveDirZ);
+
+        if (!(moveDirX == 0 && moveDirZ == 0))
+        {
+            transform.position += dir * moveSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
+        }
     }
 
     bool IsTargetVisible(GameObject target) //determine if object is in camera sight
@@ -149,7 +158,6 @@ public class PlayerController : Status
                 if (Input.GetKeyDown(KeyCode.Q)) targetIdx = targets.IndexOf(targetMonster) - 1; //previous monster
                 if (Input.GetKeyDown(KeyCode.E)) targetIdx = targets.IndexOf(targetMonster) + 1; //next monster
             }
-            theCamera.transform.localPosition = targetingCameraPos;
             initRotate = false;
             targetingMode = true;
         }
@@ -160,7 +168,6 @@ public class PlayerController : Status
             initRotate = true;
             completeInitRotate = false;
             targetMonster = null;
-            theCamera.transform.localPosition = nonTargetingCameraPos;
             StartCoroutine(InitPlayerRotation());
         }
 
@@ -170,13 +177,6 @@ public class PlayerController : Status
             targetMonster = targets[targetIdx];
             targetDir = targetMonster.transform.position - this.transform.position;
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(targetDir), rotateSpeed * Time.deltaTime);
-        }
-    }
-
-    IEnumerator MoveCameraPosition(Vector3 targetPos){
-        while(theCamera.transform.localPosition != targetPos){
-            theCamera.transform.localPosition = Vector3.Lerp(theCamera.transform.localPosition, targetPos, rotateSpeed * Time.deltaTime);
-            yield return null;
         }
     }
 

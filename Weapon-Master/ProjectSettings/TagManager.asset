@@ -9,6 +9,9 @@ TagManager:
   - Obsticle
   - Rock
   - Tree
+  - SpawnTrigger
+  - SaveNPC
+  - QuestNPC
   layers:
   - Default
   - TransparentFX

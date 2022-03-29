@@ -12,7 +12,6 @@ public class CameraMove : MonoBehaviour
     public float rotateSpeed;
 
     float dist, height;
-    float currY;
 
     void Start()
     {
@@ -22,12 +21,12 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
-        currY = Mathf.LerpAngle(this.transform.eulerAngles.y, target.eulerAngles.y, rotateSpeed * Time.deltaTime);
+        float currY = Mathf.LerpAngle(this.transform.eulerAngles.y, target.eulerAngles.y, rotateSpeed * Time.deltaTime);
         Quaternion rot = Quaternion.Euler(0, currY, 0);
 
         if (PlayerController.targetingMode)
         {
-            if (dist != targetingDist && height != targetingHeight)
+            if (dist != targetingDist && height != targetingHeight) //zoom in
             {
                 dist = Mathf.Lerp(dist, targetingDist, rotateSpeed * Time.deltaTime);
                 height = Mathf.Lerp(height, targetingHeight, rotateSpeed * Time.deltaTime);
@@ -35,7 +34,7 @@ public class CameraMove : MonoBehaviour
         }
         else
         {
-            if (dist != nonTargetingDist && height != nonTargetingHeight)
+            if (dist != nonTargetingDist && height != nonTargetingHeight) //zoom out
             {
                 dist = Mathf.Lerp(dist, nonTargetingDist, rotateSpeed * Time.deltaTime);
                 height = Mathf.Lerp(height, nonTargetingHeight, rotateSpeed * Time.deltaTime);

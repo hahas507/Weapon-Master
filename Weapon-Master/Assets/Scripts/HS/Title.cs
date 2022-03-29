@@ -1,21 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
     public GameObject basicUI;
+    public Image inputNamePanel;
     public Image loadPanel;
 
     public void NewGame()
     {
-        SceneManager.LoadScene("StartScene");
+        basicUI.SetActive(false);
+        inputNamePanel.gameObject.SetActive(true);
     }
 
-    public void LoadGame()
-    {
+    public void LoadGame(){
         basicUI.SetActive(false);
         loadPanel.gameObject.SetActive(true);
     }
