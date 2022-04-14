@@ -13,7 +13,8 @@ public class Title : MonoBehaviour
         inputNamePanel.gameObject.SetActive(true);
     }
 
-    public void LoadGame(){
+    public void LoadGame()
+    {
         basicUI.SetActive(false);
         loadPanel.gameObject.SetActive(true);
     }

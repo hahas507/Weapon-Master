@@ -9,23 +9,26 @@ public class NameInput : MonoBehaviour
     string playerName = "";
     bool isRightName = false;
 
-    void Start() {
-        //PlayerPrefs.DeleteAll();
+    void Start()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
-    void Update() {
+    void Update()
+    {
         playerName = playerNameInput.text;
-        if (playerName.Length > 1 && playerName.Length <= 10 && !playerName.Contains(" ")) {
+        if (playerName.Length > 1 && playerName.Length <= 10 && !playerName.Contains(" "))
+        {
             isRightName = true;
         }
-        
+
         else isRightName = false;
     }
 
     public void SetName()
     {
-        if(!isRightName) print("inappropriate name");
-        else if(PlayerPrefs.HasKey(playerName)) print("name is already exist.");
+        if (!isRightName) print("inappropriate name");
+        else if (PlayerPrefs.HasKey(playerName)) print("name is already exist.");
         else
         {
             PlayerPrefs.SetInt(playerName, 1);

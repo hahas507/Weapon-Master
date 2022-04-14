@@ -7,7 +7,7 @@ public class PlayerData
     public int currHP;
     public int currATK;
 
-    public PlayerData(){}
+    public PlayerData() { }
 
     public PlayerData(string playerName, int currHP, int currATK) //constructor
     {
@@ -20,7 +20,6 @@ public class PlayerData
 public class DataManager : MonoBehaviour
 {
     static DataManager instance = null;
-    public PlayerController playerController;
     public PlayerData playerData;
 
     [System.NonSerialized]
@@ -29,6 +28,12 @@ public class DataManager : MonoBehaviour
     public string inputName;
     [System.NonSerialized]
     public string path;
+
+    public string playerName;
+    public int currHP;
+    public int currATK;
+
+    PlayerController playerController;
 
     void Awake()
     {
@@ -52,8 +57,9 @@ public class DataManager : MonoBehaviour
 
     public void SaveData()
     {
-        print("save");
-        playerData = new PlayerData(inputName, playerController.GetCurrentHP(), playerController.GetCurrentATK());
+        playerController = FindObjectOfType<PlayerController>();
+        if(inputName == null) playerData = new PlayerData(playerController.playerName, playerController.currHP, playerController.currATK);
+        else playerData = new PlayerData(inputName, playerController.currHP, playerController.currATK);
         string data = JsonUtility.ToJson(playerData);
         File.WriteAllText(path + slotNum.ToString(), data);
     }
@@ -62,10 +68,18 @@ public class DataManager : MonoBehaviour
     {
         string data = File.ReadAllText(path + slotNum.ToString());
         playerData = JsonUtility.FromJson<PlayerData>(data);
+        SetPlayerStatus(playerData);
     }
 
-    public void DataClear(){
+    public void DataClear()
+    {
         slotNum = -1;
         playerData = new PlayerData();
+    }
+
+    void SetPlayerStatus(PlayerData player){
+        this.playerName = player.playerName;
+        this.currHP = player.currHP;
+        this.currATK = player.currATK;
     }
 }

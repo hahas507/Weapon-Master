@@ -1,24 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
     [Range(0, 100)]
     public int currHP;
-    int maxHP = 100;
+    protected int maxHP = 100;
 
     [Range(0, 100)]
     public int currATK;
-    int maxATK = 100;
+    protected int defaultATK = 5;
+
+    [System.NonSerialized]
+    public string playerName;
 
     public bool isDead;
-
-    void Start()
-    {
-        currHP = maxHP;
-        currATK = 1;
-    }
 
     public virtual void Damage(int dmg)
     {
@@ -33,13 +28,9 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public int GetCurrentHP()
-    {
-        return currHP;
-    }
-
-    public int GetCurrentATK()
-    {
-        return currATK;
+    public void SetPlayerStatus(string name, int HP, int ATK){
+        this.playerName = name;
+        this.currHP = HP;
+        this.currATK = ATK;
     }
 }

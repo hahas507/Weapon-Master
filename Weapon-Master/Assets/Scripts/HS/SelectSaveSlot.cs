@@ -6,20 +6,20 @@ public class SelectSaveSlot : MonoBehaviour
 {
     public Text[] slotText;
 
-    bool[] saveFile = new bool[] { false, false, false };
+    bool[] saveFile = new bool[3];
 
     void Update()
     {
         if (this.gameObject.activeSelf)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 1; i < 4; i++)
             {
                 if (File.Exists(DataManager.Instance.path + $"{i}"))
                 {
-                    saveFile[i] = true;
+                    saveFile[i - 1] = true;
                     DataManager.Instance.slotNum = i;
                     DataManager.Instance.LoadData();
-                    slotText[i].text = DataManager.Instance.playerData.playerName;
+                    slotText[i - 1].text = DataManager.Instance.playerData.playerName;
                 }
             }
             DataManager.Instance.DataClear();
@@ -28,7 +28,7 @@ public class SelectSaveSlot : MonoBehaviour
 
     public void UpdateSlot(int num)
     {
-        DataManager.Instance.slotNum = num;
+        DataManager.Instance.slotNum = num + 1;
         DataManager.Instance.SaveData();
         this.gameObject.SetActive(false);
     }

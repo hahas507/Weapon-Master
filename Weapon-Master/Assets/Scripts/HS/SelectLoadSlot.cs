@@ -9,22 +9,29 @@ public class SelectLoadSlot : MonoBehaviour
 
     bool[] saveFile = new bool[3];
 
-    void Start()
+    void Update()
     {
-        for(int i=0;i<3;i++){
-            if(File.Exists(DataManager.Instance.path + $"{i}")){
-                saveFile[i] = true;
-                DataManager.Instance.slotNum = i;
-                DataManager.Instance.LoadData();
-                slotText[i].text = DataManager.Instance.playerData.playerName;
+        if (this.gameObject.activeSelf)
+        {
+            for (int i = 1; i < 4; i++)
+            {
+                if (File.Exists(DataManager.Instance.path + $"{i}"))
+                {
+                    saveFile[i - 1] = true;
+                    DataManager.Instance.slotNum = i;
+                    DataManager.Instance.LoadData();
+                    slotText[i - 1].text = DataManager.Instance.playerData.playerName;
+                }
             }
+            DataManager.Instance.DataClear();
         }
-        DataManager.Instance.DataClear();
     }
 
-    public void UpdateSlot(int num){
-        DataManager.Instance.slotNum = num;
-        if(saveFile[num]) {
+    public void UpdateSlot(int num)
+    {
+        DataManager.Instance.slotNum = num + 1;
+        if (saveFile[num])
+        {
             DataManager.Instance.LoadData();
             SceneManager.LoadScene("QuestNSaveScene");
         }

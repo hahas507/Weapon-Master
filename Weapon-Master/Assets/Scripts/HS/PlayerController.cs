@@ -38,6 +38,11 @@ public class PlayerController : PlayerStatus
         //spm = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
     }
 
+    void Start()
+    {
+        InitStatus();
+    }
+
     void Update()
     {
         moveDirX = Input.GetAxisRaw("Horizontal");
@@ -89,6 +94,18 @@ public class PlayerController : PlayerStatus
         {
             transform.position += dir * moveSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
+        }
+    }
+
+    void InitStatus()
+    {
+        if(DataManager.Instance.inputName == null){
+            print("input name is null"); //load game
+            SetPlayerStatus(DataManager.Instance.playerName, DataManager.Instance.currHP, DataManager.Instance.currATK);
+        } 
+        else{
+            print("input name is not null"); //new game
+            SetPlayerStatus(DataManager.Instance.inputName, maxHP, defaultATK);
         }
     }
 

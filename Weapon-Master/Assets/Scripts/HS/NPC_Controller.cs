@@ -44,7 +44,6 @@ public class NPC_Controller : MonoBehaviour
             isTalking = false;
             saveDialog.SetActive(false);
             saveSlot.gameObject.SetActive(true);
-            //DataManager.Instance.SaveData();
         }
         else if (questDialog.activeSelf)
         {
