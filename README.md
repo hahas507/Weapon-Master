@@ -1,4 +1,7 @@
 # Weapon-Master
 Project made by BCSD, regular, team-2
 
-git test
+*Team
+  *김우찬
+  *이현수
+  *한재성
