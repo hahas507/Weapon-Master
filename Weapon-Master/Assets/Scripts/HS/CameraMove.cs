@@ -19,7 +19,7 @@ public class CameraMove : MonoBehaviour
         height = nonTargetingHeight;
     }
 
-    void Update()
+    void LateUpdate()
     {
         float currY = Mathf.LerpAngle(this.transform.eulerAngles.y, target.eulerAngles.y, rotateSpeed * Time.deltaTime);
         Quaternion rot = Quaternion.Euler(0, currY, 0);

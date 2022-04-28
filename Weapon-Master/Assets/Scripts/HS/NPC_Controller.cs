@@ -10,6 +10,7 @@ public class NPC_Controller : MonoBehaviour
     public GameObject questDialog;
     public Image saveSlot;
     public float minDistance;
+    public int NPC_ID; //0 is save NPC id
 
     void Update()
     {
