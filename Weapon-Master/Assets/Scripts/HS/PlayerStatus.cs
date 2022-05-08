@@ -13,7 +13,13 @@ public class PlayerStatus : MonoBehaviour
     [System.NonSerialized]
     public string playerName;
 
-    public bool isDead;
+    [System.NonSerialized]
+    public int experience = 0;
+
+    [System.NonSerialized]
+    public int gold = 0;
+
+    bool isDead = false;
 
     public virtual void Damage(int dmg)
     {
@@ -28,9 +34,11 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    public void SetPlayerStatus(string name, int HP, int ATK){
+    public void SetPlayerStatus(string name, int HP, int ATK, int experience, int gold){
         this.playerName = name;
         this.currHP = HP;
         this.currATK = ATK;
+        this.experience = experience;
+        this.gold = gold;
     }
 }

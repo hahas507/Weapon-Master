@@ -8,6 +8,7 @@ public class NPC_Controller : MonoBehaviour
     public Transform player;
     public GameObject saveDialog;
     public GameObject questDialog;
+    public Text questText;
     public Image saveSlot;
     public float minDistance;
     public int NPC_ID; //0 is save NPC id

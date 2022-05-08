@@ -101,11 +101,11 @@ public class PlayerController : PlayerStatus
     {
         if(DataManager.Instance.inputName == null){
             print("input name is null"); //load game
-            SetPlayerStatus(DataManager.Instance.playerName, DataManager.Instance.currHP, DataManager.Instance.currATK);
+            SetPlayerStatus(DataManager.Instance.playerName, DataManager.Instance.currHP, DataManager.Instance.currATK, DataManager.Instance.experience, DataManager.Instance.gold);
         } 
         else{
             print("input name is not null"); //new game
-            SetPlayerStatus(DataManager.Instance.inputName, maxHP, defaultATK);
+            SetPlayerStatus(DataManager.Instance.inputName, maxHP, defaultATK, 0, 0);
         }
     }
 
