@@ -238,7 +238,7 @@ public class Nembee : Status
         while (t <= 1)
         {
             t += Time.deltaTime * jumpSpeed;
-            //¾Æ·¡´Â ¾Ö´Ï¸ÞÀÌ¼Ç
+            //ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             //if (t > 0 && t! < .5f)
             //{
             //    anim.SetBool("Jump", true);
