@@ -6,14 +6,18 @@ public class PlayerData
     public string playerName;
     public int currHP;
     public int currATK;
+    public int experience;
+    public int gold;
 
     public PlayerData() { }
 
-    public PlayerData(string playerName, int currHP, int currATK) //constructor
+    public PlayerData(string playerName, int currHP, int currATK, int experience, int gold) //constructor
     {
         this.playerName = playerName;
         this.currHP = currHP;
         this.currATK = currATK;
+        this.experience = experience;
+        this.gold = gold;
     }
 }
 
@@ -32,6 +36,8 @@ public class DataManager : MonoBehaviour
     public string playerName;
     public int currHP;
     public int currATK;
+    public int experience;
+    public int gold;
 
     PlayerController playerController;
 
@@ -58,8 +64,8 @@ public class DataManager : MonoBehaviour
     public void SaveData()
     {
         playerController = FindObjectOfType<PlayerController>();
-        if(inputName == null) playerData = new PlayerData(playerController.playerName, playerController.currHP, playerController.currATK);
-        else playerData = new PlayerData(inputName, playerController.currHP, playerController.currATK);
+        if(inputName == null) playerData = new PlayerData(playerController.playerName, playerController.currHP, playerController.currATK, playerController.experience, playerController.gold); //load game
+        else playerData = new PlayerData(inputName, playerController.currHP, playerController.currATK, playerController.experience, playerController.gold); //new game
         string data = JsonUtility.ToJson(playerData);
         File.WriteAllText(path + slotNum.ToString(), data);
     }
@@ -81,5 +87,7 @@ public class DataManager : MonoBehaviour
         this.playerName = player.playerName;
         this.currHP = player.currHP;
         this.currATK = player.currATK;
+        this.experience = player.experience;
+        this.gold = player.gold;
     }
 }
