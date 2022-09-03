@@ -20,6 +20,7 @@ public class Room : MonoBehaviour
     public string roomId;
     public int linked_num; //0 : 왼쪽, 1 : 오른쪽, 2 : 위, 3 : 아래
     public bool isParent;
+    public int roomNum;
 
 
 

@@ -123,6 +123,8 @@ GameObject:
   - component: {fileID: 3307738159777878875}
   - component: {fileID: 7029224420610931705}
   - component: {fileID: 638174425725343899}
+  - component: {fileID: 559910211}
+  - component: {fileID: -3055499737177460837}
   m_Layer: 8
   m_Name: Tree
   m_TagString: Tree
@@ -183,6 +185,41 @@ CapsuleCollider:
   m_Height: 6.452443
   m_Direction: 1
   m_Center: {x: 0.10223329, y: 2.7262216, z: 0}
+--- !u!114 &559910211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840373273378169386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6a47bdb126e454a86234b8a66e9d93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisHP: 0
+  HP: 0
+  thisATK: 0
+  isTreeDown: 0
+--- !u!95 &-3055499737177460837
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840373273378169386}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7206660207118293291
 GameObject:
   m_ObjectHideFlags: 0

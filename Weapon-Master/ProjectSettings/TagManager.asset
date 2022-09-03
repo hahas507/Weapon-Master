@@ -9,6 +9,11 @@ TagManager:
   - Obsticle
   - Rock
   - Tree
+  - Room
+  - Wall
+  - Door
+  - SpawnTrigger
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -20,7 +25,7 @@ TagManager:
   - Environment
   - Obsticle
   - Plane
-  - 
+  - NPC
   - 
   - 
   - 

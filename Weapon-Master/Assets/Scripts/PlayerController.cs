@@ -11,26 +11,24 @@ public class PlayerController : MonoBehaviour
     public float dodgeTimer;
     public Camera theCamera;
     public Text noEnemyText;
-    public int maxHP;
 
-    float moveDirX;
-    float moveDirZ;
-    bool isDodge;
-    bool initRotate;
-    bool completeInitRotate = true;
-    int currHP;
-    int targetIdx;
+    private float moveDirX;
+    private float moveDirZ;
+    private bool isDodge;
+    private bool initRotate;
+    private bool completeInitRotate = true;
+    private int targetIdx;
 
-    Vector3 velocity;
-    GameObject[] monsters;
-    GameObject targetMonster;
-    SpawnManager spm;
-    Rigidbody rb;
-    Animator anim;
-    BoxCollider boxCollider;
-    List<GameObject> activeMonsters = new List<GameObject>();
+    private Vector3 velocity;
+    private GameObject[] monsters;
+    private GameObject targetMonster;
+    private SpawnManager spm;
+    private Rigidbody rb;
+    private Animator anim;
+    private BoxCollider boxCollider;
+    private List<GameObject> activeMonsters = new List<GameObject>();
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
@@ -38,45 +36,60 @@ public class PlayerController : MonoBehaviour
         spm = GameObject.Find("SpawnMgr").GetComponent<SpawnManager>();
     }
 
-    void Start()
-    {
-        currHP = maxHP;
-    }
-
-    void Update()
-    {
-        PlayerMove();
-        if (Input.GetKeyDown(KeyCode.Escape)) UnityEditor.EditorApplication.isPlaying = false; //quit game
-        if (Input.GetKeyDown(KeyCode.Space)) Dodge();
-
-        monsters = GameObject.FindGameObjectsWithTag("Enemy"); //all monsters on field
-        SwitchTarget(GetInSightMonsters(monsters));
-    }
-
-    void PlayerMove()
+    private void Update()
     {
         moveDirX = Input.GetAxisRaw("Horizontal");
         moveDirZ = Input.GetAxisRaw("Vertical");
-        this.transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed * moveDirZ);
-        this.transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * moveDirX);
-    }
+        SetAnimParameter((int)moveDirX, (int)moveDirZ);
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("SpawnTrigger"))
+        //if (Input.GetKeyDown(KeyCode.Escape)) UnityEditor.EditorApplication.isPlaying = false; //quit game
+        if (Input.GetKeyDown(KeyCode.Space)) Dodge();
+
+        monsters = GameObject.FindGameObjectsWithTag("Enemy"); //all monsters on field
+
+        if (targetMonster && !IsTargetVisible(targetMonster)) //if target is out of range
         {
-
-            spm.SpawnEnemy();
+            targetMonster = null;
+            StartCoroutine(InitPlayerRotation());
         }
+
+        SwitchTarget(GetInSightMonsters(monsters));
     }
 
-    bool IsTargetVisible(GameObject target) //determine if object is in camera sight
+    private void SetAnimParameter(int x, int z)
+    {
+        anim.SetBool("isRun", !(x == 0 && z == 0));
+        anim.SetInteger("DirX", x);
+        anim.SetInteger("DirZ", z);
+    }
+
+    private void FixedUpdate()
+    {
+        PlayerMove();
+    }
+
+    private void PlayerMove()
+    {
+        Vector3 moveHorizontal = this.transform.right * moveDirX;
+        Vector3 moveVertical = this.transform.forward * moveDirZ;
+        Vector3 velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
+
+        rb.MovePosition(this.transform.position + velocity * Time.deltaTime);
+    }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("SpawnTrigger"))
+    //    {
+    //        spm.SpawnEnemy();
+    //    }
+    //}
+
+    private bool IsTargetVisible(GameObject target) //determine if object is in camera sight
     {
         if (!IsTargetInRange(target)) return false; //if object is out of range
-
         var planes = GeometryUtility.CalculateFrustumPlanes(theCamera);
         var point = target.transform.position;
-
         foreach (var plane in planes)
         {
             if (plane.GetDistanceToPoint(point) < 0) return false;
@@ -84,14 +97,14 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    bool IsTargetInRange(GameObject target) //determine if object is in range
+    private bool IsTargetInRange(GameObject target) //determine if object is in range
     {
         float dist = Vector3.Distance(target.transform.position, this.transform.position);
         if (dist < sightRange) return true;
         return false;
     }
 
-    List<GameObject> GetInSightMonsters(GameObject[] monsters) //get objects that is both in camera sight and range
+    private List<GameObject> GetInSightMonsters(GameObject[] monsters) //get objects that is both in camera sight and range
     {
         activeMonsters.Clear();
         for (int i = 0; i < monsters.Length; i++)
@@ -103,7 +116,7 @@ public class PlayerController : MonoBehaviour
         return activeMonsters;
     }
 
-    void SortTarget(List<GameObject> monstersLst)
+    private void SortTarget(List<GameObject> monstersLst)
     {
         monstersLst.Sort(delegate (GameObject t1, GameObject t2)
         {
@@ -115,9 +128,9 @@ public class PlayerController : MonoBehaviour
         });
     }
 
-    void SwitchTarget(List<GameObject> targets)
+    private void SwitchTarget(List<GameObject> targets)
     {
-        if(!completeInitRotate) return;
+        if (!completeInitRotate) return;
 
         targetIdx = GetInSightMonsters(monsters).IndexOf(targetMonster); //get index of target
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
@@ -128,13 +141,11 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(TextFadeOut());
                 return;
             }
-
             if (!targets.Contains(targetMonster) || initRotate)
             {
                 targetMonster = targets[0];
                 targetIdx = 0;
             }
-
             else
             {
                 if (Input.GetKeyDown(KeyCode.Q)) targetIdx = targets.IndexOf(targetMonster) - 1; //previous monster
@@ -144,10 +155,10 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Z)) //quit targeting mode, init rotation of player
-        { 
+        {
             initRotate = true;
             completeInitRotate = false;
-            StartCoroutine(RotateTo(Quaternion.identity));
+            StartCoroutine(InitPlayerRotation());
         }
 
         if (targetMonster && !initRotate) //not null
@@ -159,36 +170,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator RotateTo(Quaternion rot)
+    private IEnumerator InitPlayerRotation()
     {
-        while (this.transform.rotation != rot)
+        while (this.transform.rotation != Quaternion.identity)
         {
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 1.5f * rotateSpeed * Time.deltaTime);
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.identity, 1.5f * rotateSpeed * Time.deltaTime);
             yield return null;
         }
         completeInitRotate = true;
     }
 
-    IEnumerator TextFadeOut(){
+    private IEnumerator TextFadeOut()
+    {
         noEnemyText.color = new Color(noEnemyText.color.r, noEnemyText.color.g, noEnemyText.color.b, 1);
         while (noEnemyText.color.a > 0.0f)
         {
             noEnemyText.color = new Color(noEnemyText.color.r, noEnemyText.color.g, noEnemyText.color.b, noEnemyText.color.a - (Time.deltaTime / 2.0f));
-            if(noEnemyText.color.a <= 0.0f) noEnemyText.gameObject.SetActive(false);
+            if (noEnemyText.color.a <= 0.0f) noEnemyText.gameObject.SetActive(false);
             yield return null;
         }
     }
 
-    void Dodge()
+    private void Dodge()
     {
-        if (!isDodge && velocity != Vector3.zero)
+        if (!isDodge)
         {
             anim.SetTrigger("Dodge");
             StartCoroutine(DodgeDelay());
         }
     }
 
-    IEnumerator DodgeDelay()
+    private IEnumerator DodgeDelay()
     {
         moveSpeed *= 2;
         isDodge = true;
@@ -198,5 +210,57 @@ public class PlayerController : MonoBehaviour
         boxCollider.enabled = true;
         yield return new WaitForSeconds(dodgeTimer);
         isDodge = false;
+    }
+
+    
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("SpawnTrigger"))
+        {
+            int fnc_roomNum = collision.gameObject.transform.parent.GetComponent<Room>().roomNum;
+            Debug.Log(fnc_roomNum);
+            spm.SpawnEnemy(fnc_roomNum);
+            collision.gameObject.SetActive(false);
+        }
+
+        if (collision.tag == "Door")
+        {
+            GameObject nextRoom = collision.gameObject.transform.parent.GetComponent<Door>().nextRoom;
+            Door nextDoor = collision.gameObject.transform.parent.GetComponent<Door>().SideDoor;
+
+            // 진행 방향을 알면 문제해결
+            if (nextDoor.doorType == Door.DoorType.left)
+            {
+                Debug.Log("왼");
+                Vector3 currPos = new Vector3(nextDoor.transform.position.x + 1.5f, 0.5f, nextDoor.transform.position.z);
+                /*Player_mapgen.Instance.*/
+                transform.position = currPos;
+            }
+            else if (nextDoor.doorType == Door.DoorType.right)
+            {
+                Debug.Log("오");
+
+                Vector3 currPos = new Vector3(nextDoor.transform.position.x - 1.5f, 0.5f, nextDoor.transform.position.z);
+                /*Player_mapgen.Instance.*/
+                transform.position = currPos;
+            }
+            else if (nextDoor.doorType == Door.DoorType.top)
+            {
+                Debug.Log("위");
+
+                Vector3 currPos = new Vector3(nextDoor.transform.position.x, 0.5f, nextDoor.transform.position.z - 1.5f);
+                /*Player_mapgen.Instance.*/
+                transform.position = currPos;
+            }
+            else
+            {
+                Debug.Log("아래");
+
+                Vector3 currPos = new Vector3(nextDoor.transform.position.x, 0.5f, nextDoor.transform.position.z + 1.5f);
+                /*Player_mapgen.Instance.*/
+                transform.position = currPos;
+            }
+        }
     }
 }

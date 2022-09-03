@@ -9,6 +9,8 @@ public class RoomManager : Singleton<RoomManager>
 
     public GameObject roomPrefab;
 
+    public int roomNum = 0;
+
 
     public RoomInfo currentLoadRoomData;
     public Room currRoom; //현재 방
@@ -19,6 +21,9 @@ public class RoomManager : Singleton<RoomManager>
     public bool spawnedBossRoom = false;
     public bool updatedRooms = false;
     public bool createRoom = false;
+
+    [SerializeField]
+    private SpawnManager spawnManager;
 
     //방 초기화. 새로운 맵 만들기 위함
     public void newCreatedRoom()
@@ -36,6 +41,8 @@ public class RoomManager : Singleton<RoomManager>
 
         //초기화
         loadedRooms.Clear();
+        roomNum = 0;
+        spawnManager.areas.Clear();
 
         //플레이어 위치 초기화(처음위치로)
         Player_mapgen.Instance.transform.position = new Vector3(0, 0.5f, 0);
@@ -100,11 +107,14 @@ public class RoomManager : Singleton<RoomManager>
         room.transform.GetComponent<Room>().isInRoute = oldRoom.isInRoute;
         room.transform.GetComponent<Room>().isParent = oldRoom.isLinked;
         room.transform.GetComponent<Room>().linked_num = oldRoom.room_linked_dir;
-
-        //RoomController 오브젝트의 자식 객체로 설정
+        room.transform.GetComponent<Room>().roomNum = roomNum;
+        roomNum++;
+        
         room.transform.parent = transform;
         //리스트에 정보 부여
         loadedRooms.Add(room.GetComponent<Room>());
+        //spawnmanager에 room정보 부여 작성해야됨
+        spawnManager.InitAreas(room.GetComponent<Room>());
     }
 
     // 방 중복 여부

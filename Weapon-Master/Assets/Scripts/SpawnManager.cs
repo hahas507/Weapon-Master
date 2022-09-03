@@ -22,19 +22,13 @@ public class Spawn
 public class SpawnManager : MonoBehaviour
 {
     public GameObject enemy;
-    public GameObject spawnArea;
 
-    List<GameObject> areas = new List<GameObject>(); //spawnAreas
+    public List<Room> areas = new List<Room>(); //spawnAreas
 
-    void Start()
+
+    public void InitAreas(Room room)
     {
-        InitAreas();
-    }
-
-    void InitAreas()
-    {
-        int cnt = spawnArea.transform.childCount;
-        for (int i = 0; i < cnt; i++) areas.Add(spawnArea.transform.GetChild(i).gameObject);
+        areas.Add(room);
     }
 
     void DestroyEnemy()
@@ -52,6 +46,8 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 pos = new Vector3(Mathf.Cos(i * Mathf.Deg2Rad), 0.0f, Mathf.Sin(i * Mathf.Deg2Rad));
             Vector3 spawnPos = pos * 10f + originPos;
+            Debug.Log(originPos);
+
             Instantiate(enemy, spawnPos, Quaternion.identity);
         }
     }
@@ -69,6 +65,7 @@ public class SpawnManager : MonoBehaviour
 
             pos = new Vector3(-3.5f + 2.5f * i, 0.0f, 6.5f - 2.5f * i);
             spawnPos = originPos + pos;
+
             Instantiate(enemy, spawnPos, Quaternion.identity);
         }
     }
@@ -102,13 +99,14 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnEnemy()
+    public void SpawnEnemy(int roomNum)
     {
         FunctionPointer[] pattern = new FunctionPointer[] { SpawnEnemyCircle, SpawnEnemyX, SpawnEnemySquare };
-        int areaIdx = Random.Range(0, areas.Count);
-        int patIdx = Random.Range(0, pattern.Length);
 
+        
+        int patIdx = Random.Range(0, pattern.Length);
+        //지금 활성화중인 roomNum을 전달
         Spawn spawn = new Spawn(pattern[patIdx]);
-        spawn.SpawnPattern(areaIdx);
+        spawn.SpawnPattern(roomNum);
     }
 }

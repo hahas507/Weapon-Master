@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6a317b388658f81408b11b9f07b421fd
+guid: 0fefe580d1a0433498420c258bf06f78
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -65,28 +65,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.22270742
-        functionName: IsAttack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.39490446
-        functionName: OnAttack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.8789809
-        functionName: IsAttackReturn
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

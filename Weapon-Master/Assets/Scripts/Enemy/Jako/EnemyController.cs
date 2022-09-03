@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class EnemyController : MonoBehaviour
+public abstract class EnemyController : Status
 {
     [SerializeField] private float speed;
 
@@ -42,8 +42,11 @@ public abstract class EnemyController : MonoBehaviour
         ac = anim.runtimeAnimatorController;
     }
 
-    protected virtual void Update()
+    private void BoolDebug()
     {
+        Debug.Log("alreadyFoundPlayer: " + alreadyFoundPlayer);
+        Debug.Log("alreadyBattleStarted: " + alreadyBattleStarted);
+        Debug.Log("alreadyInAction: " + alreadyInAction);
     }
 
     protected virtual void Search()

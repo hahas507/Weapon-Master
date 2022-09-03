@@ -12,22 +12,20 @@ public class TIgerbeetle : EnemyController
     [SerializeField] [Range(0, 10)] private int randomJumpRange;
     private bool isJumping = false;
 
-    protected override void Update()
-    {
-        base.Update();
-        Search();
-        //if (alreadyFoundPlayer)
-        //{
-        //    BattleStart();
-        //    Follow();
-        //}
-    }
-
     private void BoolDebug()
     {
         Debug.Log("alreadyFoundPlayer: " + alreadyFoundPlayer);
         Debug.Log("alreadyBattleStarted: " + alreadyBattleStarted);
         Debug.Log("alreadyInAction: " + alreadyInAction);
+    }
+
+    private void Update()
+    {
+        if (!isDead)
+        {
+            Search();
+        }
+        else return;
     }
 
     protected override void Search()
