@@ -24,7 +24,8 @@ public class PlayerData
 public class DataManager : MonoBehaviour
 {
     static DataManager instance = null;
-    public PlayerData playerData;
+
+    public PlayerData playerData = null;
 
     [System.NonSerialized]
     public int slotNum;
@@ -41,24 +42,30 @@ public class DataManager : MonoBehaviour
 
     PlayerController playerController;
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else Destroy(this.gameObject);
-        path = Application.persistentDataPath + "/slot";
-    }
-
     public static DataManager Instance
     {
         get
         {
-            if (!instance) return null;
+            if (!instance)
+            {
+                return null;
+            }
             return instance;
         }
+    }
+
+    void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+        path = Application.streamingAssetsPath + "/slot";
     }
 
     public void SaveData()
@@ -66,7 +73,7 @@ public class DataManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         if(inputName == null) playerData = new PlayerData(playerController.playerName, playerController.currHP, playerController.currATK, playerController.experience, playerController.gold); //load game
         else playerData = new PlayerData(inputName, playerController.currHP, playerController.currATK, playerController.experience, playerController.gold); //new game
-        string data = JsonUtility.ToJson(playerData);
+        string data = JsonUtility.ToJson(playerData, true);
         File.WriteAllText(path + slotNum.ToString(), data);
     }
 
@@ -83,7 +90,8 @@ public class DataManager : MonoBehaviour
         playerData = new PlayerData();
     }
 
-    void SetPlayerStatus(PlayerData player){
+    void SetPlayerStatus(PlayerData player)
+    {
         this.playerName = player.playerName;
         this.currHP = player.currHP;
         this.currATK = player.currATK;
