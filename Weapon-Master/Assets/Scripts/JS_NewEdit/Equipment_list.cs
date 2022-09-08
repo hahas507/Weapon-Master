@@ -28,9 +28,12 @@ public class Equipment_list : MonoBehaviour
         
     }
 
-    public void Acquire_Equipment(Equipment equipment)
+    public void Acquire_Equipment(List<Equipment> equipment)
     {
+        var weapon = Instantiate(equipment[0].equipment_Prefab);
+        weapon.transform.SetParent(GameObject.Find("Content").transform);
 
+        //equipment_list.Add(equipment);
     }
 
 }

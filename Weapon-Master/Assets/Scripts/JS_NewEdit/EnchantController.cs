@@ -18,6 +18,12 @@ public class EnchantController : MonoBehaviour
     [SerializeField]
     private Image selected_Image;
 
+    [SerializeField]
+    private ScrollRect scrollRect;
+
+    [SerializeField]
+    private Equipment_list equipment_List;
+
     void Start()
     {
         TextInit();
@@ -98,15 +104,20 @@ public class EnchantController : MonoBehaviour
         EnchantInfo(weapon);
     }
 
-    public void EnchantOn()
+    public void EnchantOn(List<Equipment> equipment)
     {
         //panels[0].SetActive(false);
         panels[1].SetActive(true);
+        equipment_List.Acquire_Equipment(equipment);
     }
+
+
 
     public void EnChantOff()
     {
         panels[1].SetActive(false);
     }
+
+
 
 }

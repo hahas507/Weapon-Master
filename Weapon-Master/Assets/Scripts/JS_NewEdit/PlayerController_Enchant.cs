@@ -39,6 +39,9 @@ public class PlayerController_Enchant : MonoBehaviour
     private BoxCollider boxCollider;
     private List<GameObject> activeMonsters = new List<GameObject>();
 
+    [SerializeField]
+    private List<Equipment> equipment_list = new List<Equipment>();
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -97,7 +100,7 @@ public class PlayerController_Enchant : MonoBehaviour
     {
         isWindowOn = true;
         Time.timeScale = 0;
-        enchantController.EnchantOn();
+        enchantController.EnchantOn(equipment_list);
     }
 
     public void WindowDisappear()
@@ -314,4 +317,10 @@ public class PlayerController_Enchant : MonoBehaviour
             }
         }
     }
+
+    public void Acquire_Equipment(Equipment equipment)
+    {
+        equipment_list.Add(equipment);
+    }
+
 }
