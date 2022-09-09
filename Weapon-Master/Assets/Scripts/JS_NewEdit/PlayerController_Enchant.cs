@@ -42,6 +42,8 @@ public class PlayerController_Enchant : MonoBehaviour
     [SerializeField]
     private List<Equipment> equipment_list = new List<Equipment>();
 
+    
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();

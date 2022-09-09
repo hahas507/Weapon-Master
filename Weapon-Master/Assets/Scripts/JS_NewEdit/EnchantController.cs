@@ -44,7 +44,10 @@ public class EnchantController : MonoBehaviour
 
     public void BeforeEnchant()
     {
-        EnChant(curWeapon.GetComponent<Weapon>());
+        if (curWeapon != null)
+        {
+            EnChant(curWeapon.GetComponent<Weapon>());
+        }
     }
 
     //강화 로직
@@ -109,13 +112,15 @@ public class EnchantController : MonoBehaviour
         //panels[0].SetActive(false);
         panels[1].SetActive(true);
         equipment_List.Acquire_Equipment(equipment);
+
+        
     }
-
-
 
     public void EnChantOff()
     {
+        //equipment_List.Return_Equipment();
         panels[1].SetActive(false);
+
     }
 
 

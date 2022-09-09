@@ -10,6 +10,7 @@ public class Equipment_list : MonoBehaviour
     [SerializeField]
     private ScrollRect scrollRect;
 
+
     //[SerializeField]
     
     // 플레이어가 보유 중인 장비 리스트. 플레이어에 장착.
@@ -19,7 +20,7 @@ public class Equipment_list : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -30,10 +31,31 @@ public class Equipment_list : MonoBehaviour
 
     public void Acquire_Equipment(List<Equipment> equipment)
     {
-        var weapon = Instantiate(equipment[0].equipment_Prefab);
-        weapon.transform.SetParent(GameObject.Find("Content").transform);
+        int offset = 0;
+        GameObject content = GameObject.Find("Content");
 
-        //equipment_list.Add(equipment);
+        for (int i = 0; i < equipment.Count; i++)
+        {
+            if (equipment[i] != null)
+            {
+                var weapon = Instantiate(equipment[i].equipment_Prefab, new Vector3(0, offset, 0), Quaternion.identity);
+                weapon.transform.SetParent(content.transform);
+                offset -= 200;
+            }
+
+        }
+    }
+
+    public void Return_Equipment()
+    {
+        GameObject content = GameObject.Find("Content");
+        int content_size = content.transform.childCount;
+
+
+        for (int i = 0; i < content_size; i++)
+        {
+            Destroy(content.transform.GetChild(i));
+        }
     }
 
 }
