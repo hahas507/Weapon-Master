@@ -9,6 +9,6 @@ public class MCam : MonoBehaviour
     void Start(){
         MirrorScale = MirrorCam.transform.parent.localScale;
         MirrorCam = GetComponent<Camera>();
-        MirrorCam.rect = new Rect(transform.localPosition.x, transform.localPosition.y, MirrorScale.x, MirrorScale.y);
+        
     }
 }
