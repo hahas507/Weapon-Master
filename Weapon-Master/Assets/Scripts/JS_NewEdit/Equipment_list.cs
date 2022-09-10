@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class Equipment_list : MonoBehaviour
 {
-    private EnchantController enchantController;
 
     [SerializeField]
     private ScrollRect scrollRect;
+
+    [SerializeField]
+    private PlayerController_Enchant player;
 
     public void Acquire_Equipment(List<Equipment> equipment)
     {
@@ -34,7 +36,10 @@ public class Equipment_list : MonoBehaviour
 
         for (int i = 0; i < content_size; i++)
         {
-            Destroy(content.transform.GetChild(i).gameObject);
+            GameObject content_ch = content.transform.GetChild(i).gameObject;
+            Debug.Log(content_ch.GetComponent<Weapon>().GetCurEnchant());
+            player.equipment_update(content_ch.GetComponent<Weapon>().GetCurEnchant(), content_ch.GetComponent<Weapon>().GetCurAttackpt(), i);
+            Destroy(content_ch);
         }
     }
 

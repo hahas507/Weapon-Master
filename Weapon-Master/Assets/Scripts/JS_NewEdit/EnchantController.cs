@@ -29,11 +29,6 @@ public class EnchantController : MonoBehaviour
         InfoInit();
     }
 
-    void Update()
-    {
-        
-    }
-
     //텍스트로 무기와 강화 정보 출력.
     private void EnchantInfo(Weapon weapon)
     {
@@ -83,12 +78,10 @@ public class EnchantController : MonoBehaviour
         enchantInfo[1].color = new Color(enchantInfo[1].color.r, enchantInfo[1].color.g, enchantInfo[1].color.b, 1);
         while (enchantInfo[1].color.a > 0.1f)
         {
-            Debug.Log("감소");
             enchantInfo[1].color = new Color(enchantInfo[1].color.r, enchantInfo[1].color.g, enchantInfo[1].color.b, enchantInfo[1].color.a - (Time.deltaTime / 3.0f));
             yield return null;
         }
         StartCoroutine(EnchantText());
-
     }
 
     public void InfoInit()
@@ -120,7 +113,6 @@ public class EnchantController : MonoBehaviour
         equipment_List.Return_Equipment();
         InfoInit();
         panels[0].SetActive(false);
-
     }
 
 }

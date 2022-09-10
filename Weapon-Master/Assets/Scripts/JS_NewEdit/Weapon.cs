@@ -13,12 +13,15 @@ public class Weapon : MonoBehaviour
     private int curEnchant = 0;
     [SerializeField]
     private int curAttackpt = 0;
+    
 
     [SerializeField]
     private Sprite sprite;
 
     [SerializeField]
     private EnchantController enchantController;
+
+
 
     void Start()
     {
@@ -35,14 +38,24 @@ public class Weapon : MonoBehaviour
         enchantController.GetWeapon(this);
     }
 
-    public void SetCurEnchant(int enchant)
+    public void SetCurEnchant(int _enchant)
     {
-        curEnchant = enchant;
+        curEnchant = _enchant;
     }
 
     public int GetCurEnchant()
     {
         return curEnchant;
+    }
+
+    public void SetCurAttackpt(int _attack)
+    {
+        curAttackpt = _attack;
+    }
+
+    public int GetCurAttackpt()
+    {
+        return curAttackpt;
     }
 
     public string GetName()

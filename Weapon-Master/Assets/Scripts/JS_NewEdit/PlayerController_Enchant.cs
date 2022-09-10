@@ -71,7 +71,11 @@ public class PlayerController_Enchant : MonoBehaviour
             WindowDisappear();
         }
 
-        monsters = GameObject.FindGameObjectsWithTag("Enemy"); //all monsters on field
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Inven();
+        }
+            monsters = GameObject.FindGameObjectsWithTag("Enemy"); //all monsters on field
 
         if (targetMonster && !IsTargetVisible(targetMonster)) //if target is out of range
         {
@@ -110,9 +114,20 @@ public class PlayerController_Enchant : MonoBehaviour
         enchantController.EnChantOff();
     }
 
-    public void equipment_update()
+    public void equipment_update(int _enchant, int _attack, int index)
+    {
+        equipment_list[index].SetAttack(_attack);
+        equipment_list[index].SetEnchant(_enchant);
+    }
+
+    public void Inven()
     {
 
+            for (int i = 0; i < equipment_list.Count; i++)
+            {
+                Debug.Log(equipment_list[i].GetEnchant());
+            }
+        
     }
 
     private void SetAnimParameter(int x, int z)

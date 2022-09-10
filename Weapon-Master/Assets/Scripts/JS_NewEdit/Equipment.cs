@@ -6,11 +6,35 @@ using UnityEngine;
 public class Equipment : ScriptableObject
 {
     [SerializeField]
-    public string equipment_Name;
+    private string equipment_Name;
     [SerializeField]
     public GameObject image_Prefab;
     [SerializeField]
     public GameObject equipment_Prefab;
     [SerializeField]
-    public int attack;
+    private int attack;
+    [SerializeField]
+    private int enchant;
+
+    public int GetAttack()
+    {
+        return attack;
+    }
+
+    public void SetAttack(int _attack)
+    {
+        attack = _attack;
+        
+    }
+
+    public int GetEnchant()
+    {
+        return enchant;
+    }
+
+    public void SetEnchant(int _enchant)
+    {
+        enchant = _enchant;
+    }
+
 }
