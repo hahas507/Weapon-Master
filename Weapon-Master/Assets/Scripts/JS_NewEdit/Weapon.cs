@@ -6,12 +6,19 @@ using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
-    public int curEnchant = 0;
-    public int curAttackpt = 0;
+    [SerializeField]
+    private string weaponName;
 
-    public Sprite weaponSprites;
+    [SerializeField]
+    private int curEnchant = 0;
+    [SerializeField]
+    private int curAttackpt = 0;
 
-    public EnchantController enchantController;
+    [SerializeField]
+    private Sprite sprite;
+
+    [SerializeField]
+    private EnchantController enchantController;
 
     void Start()
     {
@@ -28,4 +35,23 @@ public class Weapon : MonoBehaviour
         enchantController.GetWeapon(this);
     }
 
+    public void SetCurEnchant(int enchant)
+    {
+        curEnchant = enchant;
+    }
+
+    public int GetCurEnchant()
+    {
+        return curEnchant;
+    }
+
+    public string GetName()
+    {
+        return weaponName;
+    }
+
+    public Sprite GetSprite()
+    {
+        return sprite;
+    }
 }

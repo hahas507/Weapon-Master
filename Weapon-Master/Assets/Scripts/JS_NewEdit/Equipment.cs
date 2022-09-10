@@ -5,8 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item", menuName = "New Item/Equipment")]
 public class Equipment : ScriptableObject
 {
+    [SerializeField]
     public string equipment_Name;
-    public Sprite equipment_Image;
+    [SerializeField]
+    public GameObject image_Prefab;
+    [SerializeField]
     public GameObject equipment_Prefab;
+    [SerializeField]
     public int attack;
 }

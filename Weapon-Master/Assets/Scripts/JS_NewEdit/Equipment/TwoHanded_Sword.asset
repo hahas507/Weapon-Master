@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TwoHanded_Sword
   m_EditorClassIdentifier: 
   equipment_Name: TwoHanded Sword
-  equipment_Image: {fileID: 21300000, guid: 6329f77c83667a641a63896b5ceff583, type: 3}
-  equipment_Prefab: {fileID: 1930930967155977320, guid: cc3899886cbd0ab46a0981a44ab62106, type: 3}
+  image_Prefab: {fileID: 1930930967155977320, guid: cc3899886cbd0ab46a0981a44ab62106, type: 3}
+  equipment_Prefab: {fileID: 2872581305770524729, guid: 751223b222749da41bd0d0aef85d4b62, type: 3}
   attack: 0

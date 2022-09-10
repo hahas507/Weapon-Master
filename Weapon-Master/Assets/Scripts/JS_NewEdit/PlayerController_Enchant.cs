@@ -28,7 +28,7 @@ public class PlayerController_Enchant : MonoBehaviour
     private bool completeInitRotate = true;
     private int targetIdx;
 
-    private bool isWindowOn;
+    private bool isWindowOn = false;
 
     private Vector3 velocity;
     private GameObject[] monsters;
@@ -61,7 +61,7 @@ public class PlayerController_Enchant : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Escape)) UnityEditor.EditorApplication.isPlaying = false; //quit game
         if (Input.GetKeyDown(KeyCode.Space)) Dodge();
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && !isWindowOn)
         {
             NPC_Check();
         }
@@ -87,8 +87,6 @@ public class PlayerController_Enchant : MonoBehaviour
     {
         if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hitinfo, checkRange))
         {
-            Debug.Log(hitinfo.transform.tag);
-
             if (hitinfo.transform.tag == "NPC")
             {
                 WindowAppear();
@@ -110,6 +108,11 @@ public class PlayerController_Enchant : MonoBehaviour
         isWindowOn = false;
         Time.timeScale = 1f;
         enchantController.EnChantOff();
+    }
+
+    public void equipment_update()
+    {
+
     }
 
     private void SetAnimParameter(int x, int z)

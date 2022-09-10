@@ -26,8 +26,7 @@ public class EnchantController : MonoBehaviour
 
     void Start()
     {
-        TextInit();
-        selected_Image.color = new Color(255, 255, 255, 0);
+        InfoInit();
     }
 
     void Update()
@@ -35,11 +34,12 @@ public class EnchantController : MonoBehaviour
         
     }
 
-    //텍스트로 강화 단계 표현. 후에 이름도 표현
+    //텍스트로 무기와 강화 정보 출력.
     private void EnchantInfo(Weapon weapon)
     {
-        enchantInfo[0].text = weapon.curEnchant.ToString();
-        enchantInfo[2].text = "강화확률 : " + (10 - weapon.curEnchant) * 10 + "%";
+        enchantInfo[0].text = weapon.GetCurEnchant().ToString();
+        enchantInfo[2].text = "강화확률 : " + (10 - weapon.GetCurEnchant()) * 10 + "%";
+        enchantInfo[3].text = weapon.GetName();
     }
 
     public void BeforeEnchant()
@@ -53,12 +53,11 @@ public class EnchantController : MonoBehaviour
     //강화 로직
     public void EnChant(Weapon weapon)
     {
-        int enchantIdx = weapon.curEnchant;
+        int enchantIdx = weapon.GetCurEnchant();
 
         if (enchantIdx >= 9)
         {
             enchantInfo[1].text = "최대 단계입니다!";
-            //StartCoroutine(EnchantText());
             return;
         }
 
@@ -74,8 +73,7 @@ public class EnchantController : MonoBehaviour
             enchantInfo[1].text = "실패!";
         }
 
-        //StartCoroutine(EnchantText());
-        weapon.curEnchant = enchantIdx;
+        weapon.SetCurEnchant(enchantIdx);
         EnchantInfo(weapon);
 
     }
@@ -93,36 +91,36 @@ public class EnchantController : MonoBehaviour
 
     }
 
-    public void TextInit()
+    public void InfoInit()
     {
-        enchantInfo[1].text = "";
+        for (int i = 0; i < enchantInfo.Length; i++)
+        {
+            enchantInfo[i].text = "";
+        }
+        selected_Image.color = new Color(255, 255, 255, 0);
     }
 
     public void GetWeapon(Weapon weapon)
     {
+        InfoInit();
         curWeapon = weapon.gameObject;
-        selected_Image.sprite = weapon.weaponSprites;
+        selected_Image.sprite = weapon.GetSprite();
         selected_Image.color = new Color(255, 255, 255, 255);
-        TextInit();
         EnchantInfo(weapon);
     }
 
     public void EnchantOn(List<Equipment> equipment)
-    {
-        //panels[0].SetActive(false);
-        panels[1].SetActive(true);
+    { 
+        panels[0].SetActive(true);
         equipment_List.Acquire_Equipment(equipment);
-
-        
     }
 
     public void EnChantOff()
     {
-        //equipment_List.Return_Equipment();
-        panels[1].SetActive(false);
+        equipment_List.Return_Equipment();
+        InfoInit();
+        panels[0].SetActive(false);
 
     }
-
-
 
 }
