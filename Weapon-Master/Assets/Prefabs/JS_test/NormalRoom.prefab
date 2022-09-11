@@ -32,6 +32,9 @@ Transform:
 <<<<<<< Updated upstream
 =======
   - {fileID: 2155130741959336734}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   - {fileID: 3721014112223668584}
   m_Father: {fileID: 0}
@@ -68,13 +71,19 @@ MonoBehaviour:
   rooms: {fileID: 0}
   updateRooms: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!1 &6483161272444844645
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 --- !u!1 &3548289255077370140
 =======
 --- !u!1 &6483161272444844645
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,12 +93,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - component: {fileID: 3721014112223668584}
   - component: {fileID: 9048130258992685990}
   m_Layer: 0
   m_Name: SpawnTrigger
   m_TagString: SpawnTrigger
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
   - component: {fileID: 2155130741959336734}
   - component: {fileID: 3619598707229178928}
@@ -103,19 +115,28 @@ GameObject:
   m_Name: SpawnTrigger
   m_TagString: SpawnTrigger
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!4 &3721014112223668584
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 --- !u!4 &2155130741959336734
 =======
 --- !u!4 &3721014112223668584
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 Transform:
   m_ObjectHideFlags: 0
@@ -123,9 +144,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 6483161272444844645}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
   m_GameObject: {fileID: 3548289255077370140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -133,6 +157,9 @@ Transform:
   m_GameObject: {fileID: 6483161272444844645}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -141,13 +168,19 @@ Transform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!65 &9048130258992685990
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 --- !u!65 &3619598707229178928
 =======
 --- !u!65 &9048130258992685990
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -155,13 +188,19 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 6483161272444844645}
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
   m_GameObject: {fileID: 3548289255077370140}
 =======
   m_GameObject: {fileID: 6483161272444844645}
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_Material: {fileID: 0}
   m_IsTrigger: 1

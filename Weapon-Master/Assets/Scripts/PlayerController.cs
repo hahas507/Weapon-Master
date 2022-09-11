@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
         }
 
         SwitchTarget(GetInSightMonsters(monsters));
+<<<<<<< Updated upstream:Weapon-Master/Assets/Scripts/PlayerController.cs
     }
 
     private void SetAnimParameter(int x, int z)
@@ -126,6 +127,22 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
     }
 
+=======
+    }
+
+    private void SetAnimParameter(int x, int z)
+    {
+        anim.SetBool("isRun", !(x == 0 && z == 0));
+        anim.SetInteger("DirX", x);
+        anim.SetInteger("DirZ", z);
+    }
+
+    private void FixedUpdate()
+    {
+        PlayerMove();
+    }
+
+>>>>>>> Stashed changes:Weapon-Master/Assets/Scripts/HS/PlayerController.cs
     private void PlayerMove()
     {
         Vector3 moveHorizontal = this.transform.right * moveDirX;
@@ -143,6 +160,9 @@ public class PlayerController : MonoBehaviour
     //    }
     //}
 
+<<<<<<< Updated upstream:Weapon-Master/Assets/Scripts/PlayerController.cs
+>>>>>>> Stashed changes:Weapon-Master/Assets/Scripts/HS/PlayerController.cs
+=======
 >>>>>>> Stashed changes:Weapon-Master/Assets/Scripts/HS/PlayerController.cs
     private bool IsTargetVisible(GameObject target) //determine if object is in camera sight
     {

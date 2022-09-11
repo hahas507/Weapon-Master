@@ -1,12 +1,18 @@
 fileFormatVersion: 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 guid: f9342a1a527865b4d929116286ccaeb5
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 
 =======
 guid: f9342a1a527865b4d929116286ccaeb5
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 TextureImporter:
   internalIDToNameTable: []
@@ -47,11 +53,14 @@ TextureImporter:
     wrapV: 0
     wrapW: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 1
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
   nPOTScale: 1
   lightmap: 0
@@ -63,6 +72,9 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   spriteExtrude: 1
   spriteMeshType: 1

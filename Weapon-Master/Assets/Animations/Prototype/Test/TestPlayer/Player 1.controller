@@ -135,12 +135,18 @@ AnimatorState:
   - {fileID: 8228237453657667355}
   - {fileID: 6224135333882654946}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - {fileID: 6270355257565009888}
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 =======
   - {fileID: 6270355257565009888}
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
@@ -424,16 +430,22 @@ AnimatorStateMachine:
     m_State: {fileID: 5272491508154005702}
     m_Position: {x: 1130, y: -500, z: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - serializedVersion: 1
     m_State: {fileID: -6128349973510085469}
     m_Position: {x: 883.4548, y: -669.011, z: 0}
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 =======
   - serializedVersion: 1
     m_State: {fileID: -6128349973510085469}
     m_Position: {x: 883.4548, y: -669.011, z: 0}
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_ChildStateMachines: []
   m_AnyStateTransitions:
@@ -450,13 +462,19 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 1840, y: 270, z: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_EntryPosition: {x: 320, y: -510, z: 0}
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
   m_EntryPosition: {x: 700, y: -1400, z: 0}
 =======
   m_EntryPosition: {x: 320, y: -510, z: 0}
 >>>>>>> JS
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_ExitPosition: {x: 2340, y: 270, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -610,6 +628,11 @@ AnimatorState:
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 =======
 <<<<<<< HEAD
 =======
@@ -642,6 +665,10 @@ AnimatorState:
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> JS
+>>>>>>> Stashed changes
 =======
 >>>>>>> JS
 >>>>>>> Stashed changes
@@ -1225,6 +1252,11 @@ AnimatorStateTransition:
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 =======
 <<<<<<< HEAD
 =======
@@ -1252,6 +1284,10 @@ AnimatorStateTransition:
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> JS
+>>>>>>> Stashed changes
 =======
 >>>>>>> JS
 >>>>>>> Stashed changes
@@ -1707,6 +1743,11 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 =======
 <<<<<<< HEAD
 =======
@@ -1718,6 +1759,10 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> JS
+>>>>>>> Stashed changes
 =======
 >>>>>>> JS
 >>>>>>> Stashed changes
@@ -3038,6 +3083,11 @@ AnimatorState:
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 =======
 <<<<<<< HEAD
 =======
@@ -3068,6 +3118,10 @@ AnimatorStateTransition:
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> JS
+>>>>>>> Stashed changes
 =======
 >>>>>>> JS
 >>>>>>> Stashed changes
@@ -3148,6 +3202,11 @@ AnimatorStateTransition:
     m_ConditionEvent: isRun
     m_EventTreshold: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 =======
 <<<<<<< HEAD
 =======
@@ -3159,6 +3218,10 @@ AnimatorStateTransition:
     m_ConditionEvent: DirZ
     m_EventTreshold: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> JS
+>>>>>>> Stashed changes
 =======
 >>>>>>> JS
 >>>>>>> Stashed changes
