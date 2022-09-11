@@ -233,10 +233,12 @@ public class PlayerController : PlayerStatus
     {
         moveSpeed *= 2;
         isDodge = true;
-        boxCollider.enabled = false; //disable collider -> invincible time
+        //boxCollider.enabled = false; //disable collider -> invincible time
+        boxCollider.isTrigger = true;
         yield return new WaitForSeconds(0.5f);
         moveSpeed *= 0.5f;
-        boxCollider.enabled = true;
+        //boxCollider.enabled = true;
+        boxCollider.isTrigger = false;
         yield return new WaitForSeconds(dodgeTimer);
         isDodge = false;
     }

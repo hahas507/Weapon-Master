@@ -22,13 +22,22 @@ public class NameInput : MonoBehaviour
             isRightName = true;
         }
 
-        else isRightName = false;
+        else
+        {
+            isRightName = false;
+        }
     }
 
     public void SetName()
     {
-        if (!isRightName) print("inappropriate name");
-        else if (PlayerPrefs.HasKey(playerName)) print("name is already exist.");
+        if (!isRightName)
+        {
+            print("inappropriate name");
+        }
+        else if (PlayerPrefs.HasKey(playerName))
+        {
+            print("name is already exist.");
+        }
         else
         {
             PlayerPrefs.SetInt(playerName, 1);
