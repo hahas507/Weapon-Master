@@ -21,7 +21,11 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private EnchantController enchantController;
 
+    [SerializeField]
+    private GameObject image_Prefab;
 
+    [SerializeField]
+    private GameObject equip_Prefab;
 
     void Start()
     {
@@ -38,22 +42,22 @@ public class Weapon : MonoBehaviour
         enchantController.GetWeapon(this);
     }
 
-    public void SetCurEnchant(int _enchant)
+    public void SetEnchant(int _enchant)
     {
         curEnchant = _enchant;
     }
 
-    public int GetCurEnchant()
+    public int GetEnchant()
     {
         return curEnchant;
     }
 
-    public void SetCurAttackpt(int _attack)
+    public void SetAttack(int _attack)
     {
         curAttackpt = _attack;
     }
 
-    public int GetCurAttackpt()
+    public int GetAttack()
     {
         return curAttackpt;
     }
@@ -66,5 +70,10 @@ public class Weapon : MonoBehaviour
     public Sprite GetSprite()
     {
         return sprite;
+    }
+
+    public GameObject GetImagePrefab()
+    {
+        return image_Prefab;
     }
 }

@@ -32,8 +32,8 @@ public class EnchantController : MonoBehaviour
     //텍스트로 무기와 강화 정보 출력.
     private void EnchantInfo(Weapon weapon)
     {
-        enchantInfo[0].text = weapon.GetCurEnchant().ToString();
-        enchantInfo[2].text = "강화확률 : " + (10 - weapon.GetCurEnchant()) * 10 + "%";
+        enchantInfo[0].text = weapon.GetEnchant().ToString();
+        enchantInfo[2].text = "강화확률 : " + (10 - weapon.GetEnchant()) * 10 + "%";
         enchantInfo[3].text = weapon.GetName();
     }
 
@@ -48,7 +48,7 @@ public class EnchantController : MonoBehaviour
     //강화 로직
     public void EnChant(Weapon weapon)
     {
-        int enchantIdx = weapon.GetCurEnchant();
+        int enchantIdx = weapon.GetEnchant();
 
         if (enchantIdx >= 9)
         {
@@ -68,7 +68,7 @@ public class EnchantController : MonoBehaviour
             enchantInfo[1].text = "실패!";
         }
 
-        weapon.SetCurEnchant(enchantIdx);
+        weapon.SetEnchant(enchantIdx);
         EnchantInfo(weapon);
 
     }
@@ -102,7 +102,7 @@ public class EnchantController : MonoBehaviour
         EnchantInfo(weapon);
     }
 
-    public void EnchantOn(List<Equipment> equipment)
+    public void EnchantOn(List<Weapon> equipment)
     { 
         panels[0].SetActive(true);
         equipment_List.Acquire_Equipment(equipment);

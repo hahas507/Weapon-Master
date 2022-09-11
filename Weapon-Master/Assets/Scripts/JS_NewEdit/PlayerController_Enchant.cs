@@ -40,7 +40,7 @@ public class PlayerController_Enchant : MonoBehaviour
     private List<GameObject> activeMonsters = new List<GameObject>();
 
     [SerializeField]
-    private List<Equipment> equipment_list = new List<Equipment>();
+    private List<Weapon> equipment_list = new List<Weapon>();
 
     
 
@@ -116,8 +116,9 @@ public class PlayerController_Enchant : MonoBehaviour
 
     public void equipment_update(int _enchant, int _attack, int index)
     {
-        equipment_list[index].SetAttack(_attack);
-        equipment_list[index].SetEnchant(_enchant);
+        equipment_list[index].GetComponent<Weapon>().SetAttack(_attack);
+        equipment_list[index].GetComponent<Weapon>().SetEnchant(_enchant);
+        Debug.Log("전달완료");
     }
 
     public void Inven()
@@ -125,7 +126,7 @@ public class PlayerController_Enchant : MonoBehaviour
 
             for (int i = 0; i < equipment_list.Count; i++)
             {
-                Debug.Log(equipment_list[i].GetEnchant());
+                Debug.Log(equipment_list[i].GetComponent<Weapon>().GetEnchant());
             }
         
     }
@@ -338,7 +339,7 @@ public class PlayerController_Enchant : MonoBehaviour
         }
     }
 
-    public void Acquire_Equipment(Equipment equipment)
+    public void Acquire_Equipment(Weapon equipment)
     {
         equipment_list.Add(equipment);
     }

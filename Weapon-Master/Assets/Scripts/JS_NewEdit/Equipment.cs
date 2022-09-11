@@ -15,6 +15,15 @@ public class Equipment : ScriptableObject
     private int attack;
     [SerializeField]
     private int enchant;
+    [SerializeField]
+    private Sprite sprite;
+
+    private void Awake()
+    {
+        attack = 0;
+        enchant = 0;
+        equipment_Name = "";
+    }
 
     public int GetAttack()
     {
@@ -35,6 +44,16 @@ public class Equipment : ScriptableObject
     public void SetEnchant(int _enchant)
     {
         enchant = _enchant;
+    }
+
+    public Sprite GetSprite()
+    {
+        return sprite;
+    }
+
+    public string GetName()
+    {
+        return equipment_Name;
     }
 
 }

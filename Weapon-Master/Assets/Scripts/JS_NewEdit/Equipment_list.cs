@@ -12,7 +12,7 @@ public class Equipment_list : MonoBehaviour
     [SerializeField]
     private PlayerController_Enchant player;
 
-    public void Acquire_Equipment(List<Equipment> equipment)
+    public void Acquire_Equipment(List<Weapon> equipment)
     {
         int offset = 0;
         GameObject content = GameObject.Find("Content");
@@ -21,7 +21,7 @@ public class Equipment_list : MonoBehaviour
         {
             if (equipment[i] != null)
             {
-                var weapon = Instantiate(equipment[i].image_Prefab, new Vector3(0, offset, 0), Quaternion.identity);
+                var weapon = Instantiate(equipment[i].GetImagePrefab(), new Vector3(0, offset, 0), Quaternion.identity);
                 weapon.transform.SetParent(content.transform);
                 offset -= 200;
             }
@@ -37,8 +37,8 @@ public class Equipment_list : MonoBehaviour
         for (int i = 0; i < content_size; i++)
         {
             GameObject content_ch = content.transform.GetChild(i).gameObject;
-            Debug.Log(content_ch.GetComponent<Weapon>().GetCurEnchant());
-            player.equipment_update(content_ch.GetComponent<Weapon>().GetCurEnchant(), content_ch.GetComponent<Weapon>().GetCurAttackpt(), i);
+            Debug.Log(content_ch.GetComponent<Weapon>().GetEnchant());
+            player.equipment_update(content_ch.GetComponent<Weapon>().GetEnchant(), content_ch.GetComponent<Weapon>().GetAttack(), i);
             Destroy(content_ch);
         }
     }
