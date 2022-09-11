@@ -130,6 +130,8 @@ MonoBehaviour:
   curAttackpt: 10
   sprite: {fileID: 21300000, guid: 4e4b8f133bb75e94b809eac510f08aba, type: 3}
   enchantController: {fileID: 0}
+  image_Prefab: {fileID: 8070976840976039023, guid: b62d01e99e01f8c4b8ca31171d5fca77, type: 3}
+  equip_Prefab: {fileID: 0}
 --- !u!43 &-2694461567657938458
 Mesh:
   m_ObjectHideFlags: 0

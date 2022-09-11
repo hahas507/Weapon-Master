@@ -11,8 +11,8 @@ public class ItemPickUp : MonoBehaviour
     {
         if (other.transform.tag == "Player")
         {
-            playerController_Enchant.Acquire_Equipment(this.gameObject.GetComponent<Weapon>());//장비 리스트에 해당 장비 정보 전달.
-            Destroy(this.gameObject);
+            playerController_Enchant.Acquire_Equipment(this.gameObject);//장비 리스트에 해당 장비 정보 전달.
+            gameObject.SetActive(false);
         }
     }
 }

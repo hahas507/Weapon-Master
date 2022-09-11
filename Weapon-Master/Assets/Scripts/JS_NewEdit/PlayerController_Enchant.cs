@@ -40,7 +40,7 @@ public class PlayerController_Enchant : MonoBehaviour
     private List<GameObject> activeMonsters = new List<GameObject>();
 
     [SerializeField]
-    private List<Weapon> equipment_list = new List<Weapon>();
+    private List<GameObject> equipments= new List<GameObject>();
 
     
 
@@ -104,7 +104,7 @@ public class PlayerController_Enchant : MonoBehaviour
     {
         isWindowOn = true;
         Time.timeScale = 0;
-        enchantController.EnchantOn(equipment_list);
+        enchantController.EnchantOn(equipments);
     }
 
     public void WindowDisappear()
@@ -116,19 +116,24 @@ public class PlayerController_Enchant : MonoBehaviour
 
     public void equipment_update(int _enchant, int _attack, int index)
     {
-        equipment_list[index].GetComponent<Weapon>().SetAttack(_attack);
-        equipment_list[index].GetComponent<Weapon>().SetEnchant(_enchant);
+        equipments[index].GetComponent<Weapon>().SetAttack(_attack);
+        equipments[index].GetComponent<Weapon>().SetEnchant(_enchant);
+        equipments[index].GetComponent<Weapon>().GetImagePrefab().GetComponent<Weapon>().SetAttack(_attack);
+        equipments[index].GetComponent<Weapon>().GetImagePrefab().GetComponent<Weapon>().SetEnchant(_enchant);
+
         Debug.Log("전달완료");
     }
 
     public void Inven()
     {
 
-            for (int i = 0; i < equipment_list.Count; i++)
+            for (int i = 0; i < equipments.Count; i++)
             {
-                Debug.Log(equipment_list[i].GetComponent<Weapon>().GetEnchant());
-            }
-        
+                Debug.Log(equipments[i].GetComponent<Weapon>().GetEnchant());
+                Debug.Log(equipments[i].GetComponent<Weapon>().GetImagePrefab().GetComponent<Weapon>().GetEnchant());
+
+        }
+
     }
 
     private void SetAnimParameter(int x, int z)
@@ -339,9 +344,9 @@ public class PlayerController_Enchant : MonoBehaviour
         }
     }
 
-    public void Acquire_Equipment(Weapon equipment)
+    public void Acquire_Equipment(GameObject equipment)
     {
-        equipment_list.Add(equipment);
+        equipments.Add(equipment);
     }
 
 }

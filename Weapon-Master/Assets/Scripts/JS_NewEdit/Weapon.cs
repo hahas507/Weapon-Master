@@ -10,9 +10,9 @@ public class Weapon : MonoBehaviour
     private string weaponName;
 
     [SerializeField]
-    private int curEnchant = 0;
+    private int curEnchant;
     [SerializeField]
-    private int curAttackpt = 0;
+    private int curAttackpt;
     
 
     [SerializeField]
@@ -26,6 +26,12 @@ public class Weapon : MonoBehaviour
 
     [SerializeField]
     private GameObject equip_Prefab;
+
+    void Awake()
+    {
+        curEnchant = 0;
+        curAttackpt = 0;
+    }
 
     void Start()
     {

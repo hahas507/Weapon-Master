@@ -35,6 +35,7 @@ public class EnchantController : MonoBehaviour
         enchantInfo[0].text = weapon.GetEnchant().ToString();
         enchantInfo[2].text = "강화확률 : " + (10 - weapon.GetEnchant()) * 10 + "%";
         enchantInfo[3].text = weapon.GetName();
+        enchantInfo[4].text = weapon.GetAttack().ToString();
     }
 
     public void BeforeEnchant()
@@ -57,18 +58,21 @@ public class EnchantController : MonoBehaviour
         }
 
         int successNum = Random.Range(0, 100);
+        int attackPlus = Random.Range(3, 5);
 
         if (successNum <= ((10-enchantIdx)*10))
         {
             enchantIdx++;
+            
             enchantInfo[1].text = "성공!";
+            weapon.SetEnchant(enchantIdx);
+            weapon.SetAttack(weapon.GetAttack() + attackPlus);
         }
         else
         {
             enchantInfo[1].text = "실패!";
         }
 
-        weapon.SetEnchant(enchantIdx);
         EnchantInfo(weapon);
 
     }
@@ -102,10 +106,10 @@ public class EnchantController : MonoBehaviour
         EnchantInfo(weapon);
     }
 
-    public void EnchantOn(List<Weapon> equipment)
+    public void EnchantOn(List<GameObject> equipments)
     { 
         panels[0].SetActive(true);
-        equipment_List.Acquire_Equipment(equipment);
+        equipment_List.Acquire_Equipment(equipments);
     }
 
     public void EnChantOff()

@@ -127,9 +127,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: "\uB450\uC190\uAC80"
   curEnchant: 0
-  curAttackpt: 10
+  curAttackpt: 15
   sprite: {fileID: 21300000, guid: 6329f77c83667a641a63896b5ceff583, type: 3}
   enchantController: {fileID: 0}
+  image_Prefab: {fileID: 1930930967155977320, guid: cc3899886cbd0ab46a0981a44ab62106, type: 3}
+  equip_Prefab: {fileID: 0}
 --- !u!28 &-2934742151763636290
 Texture2D:
   m_ObjectHideFlags: 0
