@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(this.transform.position + velocity * Time.deltaTime);
     }
 
+<<<<<<< Updated upstream:Weapon-Master/Assets/Scripts/PlayerController.cs
     //private void OnTriggerEnter(Collider other)
     //{
     //    if (other.gameObject.CompareTag("SpawnTrigger"))
@@ -85,6 +86,64 @@ public class PlayerController : MonoBehaviour
     //    }
     //}
 
+=======
+    void Move()
+    {
+        if (NPC_Controller.isTalking) return;
+
+        Vector3 dir = new Vector3(moveDirX, 0, moveDirZ);
+
+        if (!(moveDirX == 0 && moveDirZ == 0))
+        {
+            transform.position += dir * moveSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
+        }
+    }
+
+    void InitStatus()
+    {
+        if(DataManager.Instance.inputName == null){
+            print("input name is null"); //load game
+            SetPlayerStatus(DataManager.Instance.playerName, DataManager.Instance.currHP, DataManager.Instance.currATK, DataManager.Instance.experience, DataManager.Instance.gold);
+        } 
+        else{
+            print("input name is not null"); //new game
+            SetPlayerStatus(DataManager.Instance.inputName, maxHP, defaultATK, 0, 0);
+        }
+
+        SwitchTarget(GetInSightMonsters(monsters));
+    }
+
+    private void SetAnimParameter(int x, int z)
+    {
+        anim.SetBool("isRun", !(x == 0 && z == 0));
+        anim.SetInteger("DirX", x);
+        anim.SetInteger("DirZ", z);
+    }
+
+    private void FixedUpdate()
+    {
+        PlayerMove();
+    }
+
+    private void PlayerMove()
+    {
+        Vector3 moveHorizontal = this.transform.right * moveDirX;
+        Vector3 moveVertical = this.transform.forward * moveDirZ;
+        Vector3 velocity = (moveHorizontal + moveVertical).normalized * moveSpeed;
+
+        rb.MovePosition(this.transform.position + velocity * Time.deltaTime);
+    }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("SpawnTrigger"))
+    //    {
+    //        spm.SpawnEnemy();
+    //    }
+    //}
+
+>>>>>>> Stashed changes:Weapon-Master/Assets/Scripts/HS/PlayerController.cs
     private bool IsTargetVisible(GameObject target) //determine if object is in camera sight
     {
         if (!IsTargetInRange(target)) return false; //if object is out of range

@@ -29,6 +29,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8291145352429731783}
+<<<<<<< Updated upstream
+=======
+  - {fileID: 2155130741959336734}
+>>>>>>> Stashed changes
   - {fileID: 3721014112223668584}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -63,7 +67,15 @@ MonoBehaviour:
   Wall: {fileID: 5771588952885221197, guid: 2197dc61120652d4ebf1692b9dd6f078, type: 3}
   rooms: {fileID: 0}
   updateRooms: 0
+<<<<<<< Updated upstream
 --- !u!1 &6483161272444844645
+=======
+<<<<<<< HEAD
+--- !u!1 &3548289255077370140
+=======
+--- !u!1 &6483161272444844645
+>>>>>>> JS
+>>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,36 +83,86 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< Updated upstream
   - component: {fileID: 3721014112223668584}
   - component: {fileID: 9048130258992685990}
   m_Layer: 0
   m_Name: SpawnTrigger
   m_TagString: SpawnTrigger
+=======
+<<<<<<< HEAD
+  - component: {fileID: 2155130741959336734}
+  - component: {fileID: 3619598707229178928}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Untagged
+=======
+  - component: {fileID: 3721014112223668584}
+  - component: {fileID: 9048130258992685990}
+  m_Layer: 0
+  m_Name: SpawnTrigger
+  m_TagString: SpawnTrigger
+>>>>>>> JS
+>>>>>>> Stashed changes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< Updated upstream
 --- !u!4 &3721014112223668584
+=======
+<<<<<<< HEAD
+--- !u!4 &2155130741959336734
+=======
+--- !u!4 &3721014112223668584
+>>>>>>> JS
+>>>>>>> Stashed changes
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 6483161272444844645}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+=======
+<<<<<<< HEAD
+  m_GameObject: {fileID: 3548289255077370140}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+=======
+  m_GameObject: {fileID: 6483161272444844645}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+>>>>>>> JS
+>>>>>>> Stashed changes
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4161155951171223908}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
 --- !u!65 &9048130258992685990
+=======
+<<<<<<< HEAD
+--- !u!65 &3619598707229178928
+=======
+--- !u!65 &9048130258992685990
+>>>>>>> JS
+>>>>>>> Stashed changes
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 6483161272444844645}
+=======
+<<<<<<< HEAD
+  m_GameObject: {fileID: 3548289255077370140}
+=======
+  m_GameObject: {fileID: 6483161272444844645}
+>>>>>>> JS
+>>>>>>> Stashed changes
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
