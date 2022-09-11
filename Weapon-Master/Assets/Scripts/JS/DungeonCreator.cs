@@ -13,6 +13,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
     public int col_num;
     public int boss_num;
 
+
     public Vector3Int startPoint = new Vector3Int(0, 0, 0);
 
     public RoomInfo[,] posArr = new RoomInfo[10, 10];
@@ -41,6 +42,7 @@ public void DungeonCreate()
                 {
                     posArr[j, i] = SingleRoom(new RoomInfo(), new Vector3Int(i, 0, j), "Single");
                 }
+
             }
         }
         MakeRoute(posArr);
@@ -125,7 +127,6 @@ public void DungeonCreate()
             //오류 체크
             else if (count >= 30)
             {
-                Debug.Log(count);
                 break;
             }
         }
@@ -293,6 +294,7 @@ public void DungeonCreate()
         single.roomID = name + "(" + pos.x + ", " + pos.y + ", " + pos.z + ")";
         single.roomName = name;
         single.currPos = pos;
+
         if (pos == new Vector3Int(0, 0, 0))
         {
             single.isInRoute = true;

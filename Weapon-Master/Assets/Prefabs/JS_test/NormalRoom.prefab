@@ -55,6 +55,7 @@ MonoBehaviour:
   roomId: 
   linked_num: 0
   isParent: 0
+  roomNum: 0
   updatedWalls: 0
   visitedRoom: 0
   isInRoute: 0

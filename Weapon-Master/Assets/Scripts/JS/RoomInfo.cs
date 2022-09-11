@@ -9,7 +9,7 @@ public class RoomInfo
     public string roomName;
     public string roomType;
     public int room_linked_dir = 4; //0 : 왼쪽, 1 : 오른쪽, 2 : 위, 3 : 아래
-
+    public int roomNum;
 
     // 현재 방의 위치
     public Vector3Int currPos;
